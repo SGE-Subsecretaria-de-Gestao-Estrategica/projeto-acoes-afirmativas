@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cotas na LPG · Achados</title>
+<meta name="description" content="Nota técnica com os principais achados da base de editais da Lei Paulo Gustavo sobre as cotas da IN MinC nº 5/2023.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --papel:#ffffff; --lavado:#f3f5f4; --tinta:#16191d; --tinta-2:#444a52; --tinta-3:#5d636b;
+  --fio:#dcdfe3; --fio-2:#edeff1; --fio-forte:#c9ced3; --verde:#1f5f45; --verde-2:#174a36; --verde-3:#e4efe9;
+  --verde-txt:#dfece5; --ok:#1f5f45; --nc:#9e3a2b; --esp:#3e6e8e; --ind:#8c5a0e; --ind-cor:#c48a2a; --sl:#8a9097;
+  --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  color-scheme: light;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+body { margin:0; background:var(--papel); color:var(--tinta); font:16px/1.6 var(--sans); font-variant-numeric:tabular-nums lining-nums; }
+::selection { background:#cfe3d8; }
+a { color:var(--verde); text-underline-offset:3px; text-decoration-thickness:1px; }
+:focus-visible { outline:2px solid var(--verde); outline-offset:2px; border-radius:2px; }
+h1,h2,p,ul,ol,dl,dd,figure { margin:0; }
+code { font-size:.88em; background:var(--lavado); padding:1px 5px; border-radius:3px; }
+.so-leitor { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.pular { position:absolute; left:-999px; top:8px; background:var(--tinta); color:#fff; padding:8px 12px; z-index:9; }
+.pular:focus { left:8px; }
+
+/* faixa: o mundo é dono da moldura */
+.faixa { background:var(--verde); color:var(--verde-txt); }
+.faixa-in { max-width:1180px; margin:0 auto; padding:34px 32px 30px; display:grid; gap:10px; }
+.faixa .serie { font-size:13px; color:#c6dccf; display:flex; flex-wrap:wrap; gap:4px 18px; margin-top:6px; padding-top:12px; border-top:1px solid rgba(255,255,255,.16); max-width:62ch; }
+.faixa h1 { color:#fff; font-size:clamp(28px, 3.4vw, 42px); line-height:1.12; letter-spacing:-.015em; font-weight:700; max-width:30ch; text-wrap:balance; }
+.faixa .sub { font-family:var(--serif); font-size:18px; color:#e9f2ed; max-width:62ch; }
+
+.abertura { max-width:1180px; margin:0 auto; padding:30px 32px 34px; display:grid; grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr); gap:36px; border-bottom:1px solid var(--fio); }
+.bloco-t { font-size:13px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; padding-bottom:8px; border-bottom:2px solid var(--tinta); margin-bottom:14px; }
+.exec ol { padding:0; list-style:none; counter-reset:e; display:grid; gap:10px; }
+.exec li { counter-increment:e; display:grid; grid-template-columns:22px 1fr; gap:10px; font-size:16px; line-height:1.5; }
+.exec li::before { content:counter(e); font-weight:700; color:var(--verde); }
+.chave { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0; }
+.chave div { padding:12px 0; border-bottom:1px solid var(--fio-2); display:grid; }
+.chave div:nth-child(odd) { padding-right:16px; }
+.chave dd { font-size:26px; font-weight:600; letter-spacing:-.01em; line-height:1.15; }
+.chave dt { font-size:13px; color:var(--tinta-2); }
+
+/* corpo: sumário fixo + coluna */
+.grade { max-width:1180px; margin:0 auto; padding:0 32px; display:grid; grid-template-columns:240px minmax(0,1fr); gap:48px; }
+.indice { position:sticky; top:0; align-self:start; padding:28px 0; max-height:100vh; overflow:auto; }
+.indice ol { list-style:none; padding:0; display:grid; gap:2px; }
+.indice a { display:grid; grid-template-columns:26px 1fr; gap:6px; padding:6px 8px; margin:0 -8px; color:var(--tinta-2); text-decoration:none; font-size:14px; line-height:1.35; border-radius:3px; }
+.indice a:hover { background:var(--lavado); color:var(--tinta); }
+.indice .sn { font-weight:700; color:var(--verde); }
+.indice .extra { margin-top:12px; padding-top:12px; border-top:1px solid var(--fio); }
+
+.achado { display:grid; grid-template-columns:64px minmax(0,1fr); gap:0 8px; padding:40px 0 36px; border-bottom:1px solid var(--fio); scroll-margin-top:12px; }
+.achado .num { font-size:40px; font-weight:700; color:var(--verde); line-height:1; letter-spacing:-.02em; padding-top:2px; }
+.achado h2 { font-size:23px; line-height:1.25; letter-spacing:-.01em; max-width:34ch; text-wrap:balance; margin-bottom:12px; }
+.ementa { font-family:var(--serif); font-size:18.5px; line-height:1.55; max-width:62ch; margin-bottom:14px; }
+.corpo > p:not(.ementa):not(.limite) { max-width:68ch; color:var(--tinta-2); margin-bottom:18px; }
+.par { display:inline-block; font:600 12px/1.6 var(--sans); color:var(--verde); background:var(--verde-3); border:1px solid #b2cbbe; border-radius:2px; padding:0 5px; margin-right:8px; vertical-align:2px; }
+figure { margin:8px 0 18px; max-width:720px; }
+figure svg { width:100%; height:auto; display:block; overflow:visible; }
+.rola { overflow-x:auto; }
+.hb { display:grid; gap:9px; max-width:720px; }
+.hb-l { display:grid; grid-template-columns:var(--rot, 140px) minmax(0,1fr) minmax(64px, max-content); gap:12px; align-items:center; font-size:14px; }
+.hb-emp .hb-l { grid-template-columns:120px minmax(0,1fr) 48px; }
+.hb-rot { color:var(--tinta); line-height:1.3; }
+.hb-trilho { display:flex; height:16px; }
+.hb-trilho.emp { height:22px; background:var(--fio-2); }
+.hb-trilho > span { display:block; height:100%; font:600 12px/22px var(--sans); color:#fff; padding-left:5px; overflow:hidden; white-space:nowrap; }
+.hb-trilho > .b-indeterminado { color:var(--tinta); }
+.hb-v { font-size:13px; color:var(--tinta-3); white-space:nowrap; text-align:right; }
+.hb-v b { font-size:14px; color:var(--tinta); font-weight:600; }
+.hb-emp .hb-v { text-align:right; }
+.b-conforme { background:var(--ok); } .b-nao_conforme { background:var(--nc); } .b-especifico { background:var(--esp); }
+.b-indeterminado { background:var(--ind-cor); } .b-tinta { background:var(--tinta-2); }
+.b-sem_leitura { background:repeating-linear-gradient(135deg, var(--sl) 0 2px, transparent 2px 4px); }
+.part > span { border-right:2px solid #fff; }
+.hb-um { grid-template-columns:minmax(0,1fr) 48px !important; }
+.lista5 { list-style:none; padding:0; margin:12px 0 0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px 24px; font-size:14px; color:var(--tinta-2); }
+.lista5 b { color:var(--tinta); font-weight:600; margin-right:4px; }
+.disp-estreita { display:none !important; }
+.par { position:relative; cursor:help; }
+.par-txt { position:absolute; z-index:5; left:0; top:calc(100% + 6px); width:280px; white-space:normal; background:var(--tinta); color:#f1f3f4; font:400 13px/1.45 var(--sans); padding:9px 11px; border-radius:3px; box-shadow:0 6px 18px rgba(16,24,32,.22); opacity:0; transform:translateY(-3px); pointer-events:none; transition:opacity .16s, transform .16s; }
+.par-txt b { color:#fff; font-weight:600; }
+.par:hover .par-txt, .par:focus .par-txt { opacity:1; transform:none; }
+.legenda { display:flex; flex-wrap:wrap; gap:4px 16px; font-size:13px; color:var(--tinta-2); margin-top:2px; }
+.leg::before { content:""; display:inline-block; width:10px; height:10px; margin-right:6px; vertical-align:-1px; }
+.b-conforme-l::before { background:var(--ok); } .b-nao_conforme-l::before { background:var(--nc); }
+.b-especifico-l::before { background:var(--esp); } .b-indeterminado-l::before { background:var(--ind-cor); }
+.b-sem_leitura-l::before { background:repeating-linear-gradient(135deg, var(--sl) 0 2px, transparent 2px 4px); outline:1px solid var(--sl); outline-offset:-1px; }
+figcaption { font-size:13.5px; color:var(--tinta-3); margin-top:8px; max-width:68ch; }
+.limite { font-size:14px; line-height:1.5; color:var(--tinta-2); max-width:68ch; padding:10px 0 0; border-top:1px dashed var(--fio-forte); }
+.limite b { color:var(--tinta); }
+
+/* tabela */
+.tab { border-collapse:collapse; font-size:14px; margin:4px 0 18px; }
+.tab th, .tab td { padding:8px 14px 8px 0; border-bottom:1px solid var(--fio-2); text-align:right; }
+.tab thead th { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--tinta-3); border-bottom:1px solid var(--tinta); }
+.tab tbody th { text-align:left; font-weight:600; }
+.tab td.forte { font-weight:700; font-size:17px; }
+
+/* svg */
+.t-rot { font:14px var(--sans); fill:var(--tinta); }
+.t-num { font:600 14px var(--sans); fill:var(--tinta); }
+.t-nota { font:400 13px var(--sans); fill:var(--tinta-3); }
+.t-in { font:600 12px var(--sans); fill:#fff; }
+.t-eixo { font:12px var(--sans); fill:var(--tinta-3); }
+.t-ponto { font:600 12px var(--sans); fill:var(--tinta); }
+.grade line, line.grade { stroke:var(--fio-2); stroke-width:1; }
+.diag { stroke:var(--nc); stroke-width:1; stroke-dasharray:4 4; }
+.pt-est { fill:var(--tinta-2); }
+.pt-cap { fill:#fff; stroke:var(--tinta-2); stroke-width:1.6; }
+.f-conforme { fill:var(--ok); } .f-nao_conforme { fill:var(--nc); } .f-especifico { fill:var(--esp); }
+.f-indeterminado { fill:var(--ind-cor); } .f-sem_leitura { fill:var(--sl); } .f-tinta { fill:var(--tinta-2); }
+
+.limites { padding:40px 0 20px; }
+.limites ul { padding:0; list-style:none; display:grid; gap:12px; max-width:72ch; }
+.limites li { padding-left:16px; position:relative; color:var(--tinta-2); }
+.limites li::before { content:""; position:absolute; left:0; top:.7em; width:6px; height:6px; background:var(--ind-cor); }
+.limites b { color:var(--tinta); }
+.metodo { font-size:14px; color:var(--tinta-3); max-width:72ch; padding:18px 0 56px; }
+.rodape { border-top:2px solid var(--tinta); }
+
+@media (max-width: 960px) {
+  .abertura { grid-template-columns:minmax(0,1fr); }
+  .grade { grid-template-columns:minmax(0,1fr); gap:0; }
+  .indice { position:static; max-height:none; padding:24px 0 8px; border-bottom:1px solid var(--fio); }
+  .indice ol { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 600px) {
+  .faixa-in, .abertura, .grade { padding-left:16px; padding-right:16px; }
+  .faixa .sub { font-size:16.5px; }
+  .indice ol { grid-template-columns:minmax(0,1fr); }
+  .achado { grid-template-columns:minmax(0,1fr); padding:32px 0 28px; }
+  .achado .num { font-size:30px; margin-bottom:8px; }
+  .achado h2 { font-size:20px; }
+  .ementa { font-size:17px; }
+  .chave dd { font-size:22px; }
+  .tab { font-size:13px; display:block; overflow-x:auto; }
+  .hb-l, .hb-emp .hb-l { grid-template-columns:minmax(0,1fr) auto; gap:4px 10px; }
+  .hb-rot { grid-column:1 / -1; font-size:13.5px; }
+  .hb-v { white-space:normal; }
+  .disp-larga { display:none !important; }
+  .disp-estreita { display:block !important; }
+  .lista5 { grid-template-columns:minmax(0,1fr); }
+  .par-txt { width:min(280px, calc(100vw - 48px)); }
+  .tab th, .tab td { padding-right:10px; }
+}
+@media print {
+  .faixa { background:none; color:var(--tinta); border-bottom:2px solid var(--verde); }
+  .faixa h1, .faixa .sub, .faixa .serie { color:var(--tinta); }
+  .indice, .pular { display:none; }
+  .par-txt { position:static; opacity:1; transform:none; background:none; color:var(--tinta-2); box-shadow:none; padding:0 0 0 6px; width:auto; display:inline; }
+  .par-txt b { color:var(--tinta); }
+  .grade { grid-template-columns:minmax(0,1fr); }
+  .achado { break-inside:avoid; }
+  a { color:inherit; text-decoration:none; }
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#achados">Pular para os achados</a>
+<header class="faixa">
+  <div class="faixa-in">
+    <h1>Cotas da IN 5 nos editais da Lei Paulo Gustavo: dez achados</h1>
+    <p class="sub">O que a base de editais de estados, DF e capitais mostra sobre a reserva de vagas para pessoas negras e indígenas, e o que ela ainda não permite afirmar.</p>
+    <p class="serie"><span>Nota técnica</span><span>Base de 385 editais</span><span>Gerada em 16/10/2026</span></p>
+  </div>
+</header>
+<section class="abertura" aria-label="Resumo">
+  <div class="exec"><h2 class="bloco-t">Sumário executivo</h2><ol><li>70% dos 385 editais cumprem a IN 5; a taxa de não conformidade é quase igual em estados e capitais.</li><li>63 de 82 não conformes não têm cota ou não a aplicam por categoria (§3º).</li><li>Quatro estados concentram 63% dos não conformes estaduais.</li><li>96% dos 318 editais com percentual informado reservam exatamente o mínimo para pessoas negras.</li><li>R$ 395 mi (19% do valor) estão em editais não conformes.</li></ol></div>
+  <div><h2 class="bloco-t">Números-chave</h2><dl class="chave"><div><dd>385</dd><dt>editais</dt></div><div><dd>25+25</dd><dt>entes na base</dt></div><div><dd>R$ 2,04 bi</dd><dt>em editais</dt></div><div><dd>69,6%</dd><dt>conformes</dt></div><div><dd>82</dd><dt>não conformes</dt></div><div><dd>17</dd><dt>a revisar</dt></div></dl></div>
+</section>
+<div class="grade">
+  <nav class="indice" aria-label="Achados">
+    <h2 class="bloco-t">Achados</h2>
+    <ol><li><a href="#a1"><span class="sn">1</span>Sete em cada dez cumprem</a></li><li><a href="#a2"><span class="sn">2</span>Capitais e volume de editais</a></li><li><a href="#a3"><span class="sn">3</span>Falha de desenho</a></li><li><a href="#a4"><span class="sn">4</span>Os dois grupos juntos</a></li><li><a href="#a5"><span class="sn">5</span>Concentração em quatro estados</a></li><li><a href="#a6"><span class="sn">6</span>O mínimo virou padrão</a></li><li><a href="#a7"><span class="sn">7</span>Valor em editais não conformes</a></li><li><a href="#a8"><span class="sn">8</span>Cota por categoria como sinal</a></li><li><a href="#a9"><span class="sn">9</span>Modalidade e área</a></li><li><a href="#a10"><span class="sn">10</span>Outras cotas</a></li></ol>
+    <ol class="extra"><li><a href="#limites"><span class="sn"></span>Limites da base</a></li></ol>
+  </nav>
+  <main id="achados">
+    
+<section class="achado" id="a1" aria-labelledby="a1-t">
+  <div class="num" aria-hidden="true">1</div>
+  <div class="corpo">
+    <h2 id="a1-t"><span class="so-leitor">Achado 1. </span>Sete em cada dez editais cumprem a IN 5; 82 não cumprem</h2>
+    <p class="ementa"><span class="par" tabindex="0">art. 5º<span class="par-txt" role="tooltip"><b>IN 5, art. 5º</b> No mínimo 20% das vagas para pessoas negras e 10% para pessoas indígenas.</span></span>268 de 385 editais (69,6%) reservam o mínimo de 20% para pessoas negras e 10% para pessoas indígenas; 82 (21,3%) ficam abaixo em pelo menos um grupo.</p>
+    <p>A taxa de não conformidade é quase a mesma nos dois tipos de ente: 21,7% nos editais estaduais e 20,4% nos das capitais. Outros 18 editais são específicos, dirigidos integralmente a um grupo, e 17 não puderam ser classificados.</p>
+    <figure><div class="hb hb-emp"><div class="hb-l"><span class="hb-rot">Estados e DF</span><span class="hb-trilho emp" role="img" aria-label="Estados e DF: 193 conforme, 60 não conforme, 16 específico, 6 indeterminado, 2 sem leitura"><span class="b-conforme" style="width:69.68%" title="Conforme: 193">193</span><span class="b-nao_conforme" style="width:21.66%" title="Não conforme: 60">60</span><span class="b-especifico" style="width:5.78%" title="Específico: 16">16</span><span class="b-indeterminado" style="width:2.17%" title="Indeterminado: 6"></span><span class="b-sem_leitura" style="width:0.72%" title="Sem leitura: 2"></span></span><span class="hb-v"><b>277</b></span></div><div class="hb-l"><span class="hb-rot">Capitais</span><span class="hb-trilho emp" role="img" aria-label="Capitais: 75 conforme, 22 não conforme, 2 específico, 9 indeterminado"><span class="b-conforme" style="width:69.44%" title="Conforme: 75">75</span><span class="b-nao_conforme" style="width:20.37%" title="Não conforme: 22">22</span><span class="b-especifico" style="width:1.85%" title="Específico: 2"></span><span class="b-indeterminado" style="width:8.33%" title="Indeterminado: 9">9</span></span><span class="hb-v"><b>108</b></span></div><div class="legenda"><span class="leg b-conforme-l">Conforme</span><span class="leg b-nao_conforme-l">Não conforme</span><span class="leg b-especifico-l">Específico</span><span class="leg b-indeterminado-l">Indeterminado</span><span class="leg b-sem_leitura-l">Sem leitura</span></div></div><figcaption>Editais por situação na IN 5, por tipo de ente (número de editais).</figcaption></figure>
+    <p class="limite"><b>Limite.</b> A classificação vem de regras aplicadas em código sobre a extração automática; 15 indeterminados e 2 sem leitura ficam fora das duas contas e pedem revisão manual.</p>
+  </div>
+</section>
+<section class="achado" id="a2" aria-labelledby="a2-t">
+  <div class="num" aria-hidden="true">2</div>
+  <div class="corpo">
+    <h2 id="a2-t"><span class="so-leitor">Achado 2. </span>Capitais parecem cumprir mais, em boa parte porque publicam menos editais</h2>
+    <p class="ementa">13 de 25 capitais não têm nenhum edital não conforme, contra 8 de 25 estados.</p>
+    <p>Por edital, os dois tipos falham na mesma proporção (achado 1). A diferença está no volume: a mediana é de 10 editais por estado e 4 por capital. Quem publica mais editais tem mais chances de ter ao menos um fora da regra, então “ente sem não conforme” mede tanto o volume quanto o cuidado.</p>
+    <figure><svg viewBox="0 0 640 330" class="disp-larga" role="img" aria-label="Número de editais e de editais não conformes por ente"><line x1="34.0" x2="34.0" y1="14" y2="296" class="grade"/><text x="34.0" y="312" class="t-eixo" text-anchor="middle">0</text><line x1="133.0" x2="133.0" y1="14" y2="296" class="grade"/><text x="133.0" y="312" class="t-eixo" text-anchor="middle">5</text><line x1="232.0" x2="232.0" y1="14" y2="296" class="grade"/><text x="232.0" y="312" class="t-eixo" text-anchor="middle">10</text><line x1="331.0" x2="331.0" y1="14" y2="296" class="grade"/><text x="331.0" y="312" class="t-eixo" text-anchor="middle">15</text><line x1="430.0" x2="430.0" y1="14" y2="296" class="grade"/><text x="430.0" y="312" class="t-eixo" text-anchor="middle">20</text><line x1="529.0" x2="529.0" y1="14" y2="296" class="grade"/><text x="529.0" y="312" class="t-eixo" text-anchor="middle">25</text><line x1="628.0" x2="628.0" y1="14" y2="296" class="grade"/><text x="628.0" y="312" class="t-eixo" text-anchor="middle">30</text><line x1="34" x2="628" y1="296.0" y2="296.0" class="grade"/><text x="26" y="300.0" class="t-eixo" text-anchor="end">0</text><line x1="34" x2="628" y1="202.0" y2="202.0" class="grade"/><text x="26" y="206.0" class="t-eixo" text-anchor="end">5</text><line x1="34" x2="628" y1="108.0" y2="108.0" class="grade"/><text x="26" y="112.0" class="t-eixo" text-anchor="end">10</text><line x1="34" x2="628" y1="14.0" y2="14.0" class="grade"/><text x="26" y="18.0" class="t-eixo" text-anchor="end">15</text><line x1="34.0" y1="296.0" x2="331.0" y2="14.0" class="diag"/><text x="191.3" y="132.9" class="t-nota" text-anchor="end" transform="rotate(-43.5 191.3 132.9)">todos os editais não conformes</text><text x="628" y="328" class="t-eixo" text-anchor="end">editais do ente →</text><text x="34" y="11" class="t-eixo">↑ não conformes</text><circle cx="93.4" cy="277.2" r="5" class="pt-cap"><title>Aracaju: 1 de 3</title></circle><circle cx="93.4" cy="296.0" r="5" class="pt-cap"><title>Belo Horizonte: 0 de 3</title></circle><circle cx="152.8" cy="296.0" r="5" class="pt-cap"><title>Belém: 0 de 6</title></circle><circle cx="73.6" cy="296.0" r="5" class="pt-cap"><title>Boa Vista: 0 de 2</title></circle><circle cx="113.2" cy="296.0" r="5" class="pt-cap"><title>Campo Grande: 0 de 4</title></circle><circle cx="93.4" cy="258.4" r="5" class="pt-cap"><title>Cuiabá: 2 de 3</title></circle><circle cx="113.2" cy="258.4" r="5" class="pt-cap"><title>Curitiba: 2 de 4</title></circle><circle cx="133.0" cy="239.6" r="5" class="pt-cap"><title>Florianópolis: 3 de 5</title></circle><circle cx="113.2" cy="258.4" r="5" class="pt-cap"><title>Fortaleza: 2 de 4</title></circle><circle cx="113.2" cy="296.0" r="5" class="pt-cap"><title>Goiânia: 0 de 4</title></circle><circle cx="73.6" cy="277.2" r="5" class="pt-cap"><title>João Pessoa: 1 de 2</title></circle><circle cx="73.6" cy="296.0" r="5" class="pt-cap"><title>Macapá: 0 de 2</title></circle><circle cx="73.6" cy="296.0" r="5" class="pt-cap"><title>Maceió: 0 de 2</title></circle><circle cx="113.2" cy="258.4" r="5" class="pt-cap"><title>Natal: 2 de 4</title></circle><circle cx="73.6" cy="296.0" r="5" class="pt-cap"><title>Palmas: 0 de 2</title></circle><circle cx="113.2" cy="296.0" r="5" class="pt-cap"><title>Porto Alegre: 0 de 4</title></circle><circle cx="93.4" cy="296.0" r="5" class="pt-cap"><title>Porto Velho: 0 de 3</title></circle><circle cx="73.6" cy="296.0" r="5" class="pt-cap"><title>Recife: 0 de 2</title></circle><circle cx="172.6" cy="296.0" r="5" class="pt-cap"><title>Rio Branco: 0 de 7</title></circle><circle cx="113.2" cy="258.4" r="5" class="pt-cap"><title>Salvador: 2 de 4</title></circle><circle cx="73.6" cy="277.2" r="5" class="pt-cap"><title>São Luis: 1 de 2</title></circle><circle cx="133.0" cy="277.2" r="5" class="pt-cap"><title>Teresina: 1 de 5</title></circle><circle cx="73.6" cy="296.0" r="5" class="pt-cap"><title>Vitória: 0 de 2</title></circle><circle cx="113.2" cy="277.2" r="5" class="pt-est"><title>AC: 1 de 4</title></circle><circle cx="73.6" cy="296.0" r="5" class="pt-est"><title>AP: 0 de 2</title></circle><circle cx="251.8" cy="277.2" r="5" class="pt-est"><title>AM: 1 de 11</title></circle><circle cx="93.4" cy="277.2" r="5" class="pt-est"><title>BA: 1 de 3</title></circle><circle cx="93.4" cy="258.4" r="5" class="pt-est"><title>DF: 2 de 3</title></circle><circle cx="449.8" cy="296.0" r="5" class="pt-est"><title>GO: 0 de 21</title></circle><circle cx="113.2" cy="296.0" r="5" class="pt-est"><title>MS: 0 de 4</title></circle><circle cx="232.0" cy="258.4" r="5" class="pt-est"><title>MG: 2 de 10</title></circle><circle cx="271.6" cy="277.2" r="5" class="pt-est"><title>PR: 1 de 12</title></circle><circle cx="271.6" cy="296.0" r="5" class="pt-est"><title>PE: 0 de 12</title></circle><circle cx="152.8" cy="277.2" r="5" class="pt-est"><title>PI: 1 de 6</title></circle><circle cx="113.2" cy="296.0" r="5" class="pt-est"><title>RN: 0 de 4</title></circle><circle cx="172.6" cy="258.4" r="5" class="pt-est"><title>RS: 2 de 7</title></circle><circle cx="133.0" cy="277.2" r="5" class="pt-est"><title>RO: 1 de 5</title></circle><circle cx="133.0" cy="277.2" r="5" class="pt-est"><title>SC: 1 de 5</title></circle><circle cx="93.4" cy="296.0" r="5" class="pt-est"><title>SE: 0 de 3</title></circle><circle cx="133.0" cy="220.8" r="5" class="pt-est"><title>TO: 4 de 5</title></circle><circle cx="350.8" cy="220.8" r="5" class="pt-cap"><title>Rio de Janeiro: 4 de 16</title></circle><text x="358.8" y="224.8" class="t-ponto" text-anchor="start">Rio de Janeiro</text><circle cx="291.4" cy="277.2" r="5" class="pt-cap"><title>São Paulo: 1 de 13</title></circle><text x="299.4" y="281.2" class="t-ponto" text-anchor="start">São Paulo</text><circle cx="568.6" cy="239.6" r="5" class="pt-est"><title>AL: 3 de 27</title></circle><text x="560.6" y="243.6" class="t-ponto" text-anchor="end">AL</text><circle cx="331.0" cy="108.0" r="5" class="pt-est"><title>CE: 10 de 15</title></circle><text x="339.0" y="112.0" class="t-ponto" text-anchor="start">CE</text><circle cx="469.6" cy="183.2" r="5" class="pt-est"><title>ES: 6 de 22</title></circle><text x="477.6" y="187.2" class="t-ponto" text-anchor="start">ES</text><circle cx="271.6" cy="126.8" r="5" class="pt-est"><title>MT: 9 de 12</title></circle><text x="279.6" y="130.8" class="t-ponto" text-anchor="start">MT</text><circle cx="291.4" cy="51.6" r="5" class="pt-est"><title>PB: 13 de 13</title></circle><text x="299.4" y="55.6" class="t-ponto" text-anchor="start">PB</text><circle cx="588.4" cy="258.4" r="5" class="pt-est"><title>PA: 2 de 28</title></circle><text x="580.4" y="262.4" class="t-ponto" text-anchor="end">PA</text><circle cx="410.2" cy="296.0" r="5" class="pt-est"><title>RJ: 0 de 19</title></circle><text x="418.2" y="300.0" class="t-ponto" text-anchor="start">RJ</text><circle cx="509.2" cy="296.0" r="5" class="pt-est"><title>SP: 0 de 24</title></circle><text x="501.2" y="300.0" class="t-ponto" text-anchor="end">SP</text></svg><svg viewBox="0 0 340 300" class="disp-estreita" role="img" aria-label="Número de editais e de editais não conformes por ente"><line x1="34.0" x2="34.0" y1="14" y2="266" class="grade"/><text x="34.0" y="282" class="t-eixo" text-anchor="middle">0</text><line x1="83.0" x2="83.0" y1="14" y2="266" class="grade"/><text x="83.0" y="282" class="t-eixo" text-anchor="middle">5</text><line x1="132.0" x2="132.0" y1="14" y2="266" class="grade"/><text x="132.0" y="282" class="t-eixo" text-anchor="middle">10</text><line x1="181.0" x2="181.0" y1="14" y2="266" class="grade"/><text x="181.0" y="282" class="t-eixo" text-anchor="middle">15</text><line x1="230.0" x2="230.0" y1="14" y2="266" class="grade"/><text x="230.0" y="282" class="t-eixo" text-anchor="middle">20</text><line x1="279.0" x2="279.0" y1="14" y2="266" class="grade"/><text x="279.0" y="282" class="t-eixo" text-anchor="middle">25</text><line x1="328.0" x2="328.0" y1="14" y2="266" class="grade"/><text x="328.0" y="282" class="t-eixo" text-anchor="middle">30</text><line x1="34" x2="328" y1="266.0" y2="266.0" class="grade"/><text x="26" y="270.0" class="t-eixo" text-anchor="end">0</text><line x1="34" x2="328" y1="182.0" y2="182.0" class="grade"/><text x="26" y="186.0" class="t-eixo" text-anchor="end">5</text><line x1="34" x2="328" y1="98.0" y2="98.0" class="grade"/><text x="26" y="102.0" class="t-eixo" text-anchor="end">10</text><line x1="34" x2="328" y1="14.0" y2="14.0" class="grade"/><text x="26" y="18.0" class="t-eixo" text-anchor="end">15</text><line x1="34.0" y1="266.0" x2="181.0" y2="14.0" class="diag"/><text x="108.8" y="119.4" class="t-nota" text-anchor="end" transform="rotate(-59.7 108.8 119.4)">todos não conformes</text><text x="328" y="298" class="t-eixo" text-anchor="end">editais do ente →</text><text x="34" y="11" class="t-eixo">↑ não conformes</text><circle cx="63.4" cy="249.2" r="4" class="pt-cap"><title>Aracaju: 1 de 3</title></circle><circle cx="63.4" cy="266.0" r="4" class="pt-cap"><title>Belo Horizonte: 0 de 3</title></circle><circle cx="92.8" cy="266.0" r="4" class="pt-cap"><title>Belém: 0 de 6</title></circle><circle cx="53.6" cy="266.0" r="4" class="pt-cap"><title>Boa Vista: 0 de 2</title></circle><circle cx="73.2" cy="266.0" r="4" class="pt-cap"><title>Campo Grande: 0 de 4</title></circle><circle cx="63.4" cy="232.4" r="4" class="pt-cap"><title>Cuiabá: 2 de 3</title></circle><circle cx="73.2" cy="232.4" r="4" class="pt-cap"><title>Curitiba: 2 de 4</title></circle><circle cx="83.0" cy="215.6" r="4" class="pt-cap"><title>Florianópolis: 3 de 5</title></circle><circle cx="73.2" cy="232.4" r="4" class="pt-cap"><title>Fortaleza: 2 de 4</title></circle><circle cx="73.2" cy="266.0" r="4" class="pt-cap"><title>Goiânia: 0 de 4</title></circle><circle cx="53.6" cy="249.2" r="4" class="pt-cap"><title>João Pessoa: 1 de 2</title></circle><circle cx="53.6" cy="266.0" r="4" class="pt-cap"><title>Macapá: 0 de 2</title></circle><circle cx="53.6" cy="266.0" r="4" class="pt-cap"><title>Maceió: 0 de 2</title></circle><circle cx="73.2" cy="232.4" r="4" class="pt-cap"><title>Natal: 2 de 4</title></circle><circle cx="53.6" cy="266.0" r="4" class="pt-cap"><title>Palmas: 0 de 2</title></circle><circle cx="73.2" cy="266.0" r="4" class="pt-cap"><title>Porto Alegre: 0 de 4</title></circle><circle cx="63.4" cy="266.0" r="4" class="pt-cap"><title>Porto Velho: 0 de 3</title></circle><circle cx="53.6" cy="266.0" r="4" class="pt-cap"><title>Recife: 0 de 2</title></circle><circle cx="102.6" cy="266.0" r="4" class="pt-cap"><title>Rio Branco: 0 de 7</title></circle><circle cx="73.2" cy="232.4" r="4" class="pt-cap"><title>Salvador: 2 de 4</title></circle><circle cx="53.6" cy="249.2" r="4" class="pt-cap"><title>São Luis: 1 de 2</title></circle><circle cx="83.0" cy="249.2" r="4" class="pt-cap"><title>Teresina: 1 de 5</title></circle><circle cx="53.6" cy="266.0" r="4" class="pt-cap"><title>Vitória: 0 de 2</title></circle><circle cx="73.2" cy="249.2" r="4" class="pt-est"><title>AC: 1 de 4</title></circle><circle cx="53.6" cy="266.0" r="4" class="pt-est"><title>AP: 0 de 2</title></circle><circle cx="141.8" cy="249.2" r="4" class="pt-est"><title>AM: 1 de 11</title></circle><circle cx="63.4" cy="249.2" r="4" class="pt-est"><title>BA: 1 de 3</title></circle><circle cx="63.4" cy="232.4" r="4" class="pt-est"><title>DF: 2 de 3</title></circle><circle cx="239.8" cy="266.0" r="4" class="pt-est"><title>GO: 0 de 21</title></circle><circle cx="73.2" cy="266.0" r="4" class="pt-est"><title>MS: 0 de 4</title></circle><circle cx="132.0" cy="232.4" r="4" class="pt-est"><title>MG: 2 de 10</title></circle><circle cx="151.6" cy="249.2" r="4" class="pt-est"><title>PR: 1 de 12</title></circle><circle cx="151.6" cy="266.0" r="4" class="pt-est"><title>PE: 0 de 12</title></circle><circle cx="92.8" cy="249.2" r="4" class="pt-est"><title>PI: 1 de 6</title></circle><circle cx="73.2" cy="266.0" r="4" class="pt-est"><title>RN: 0 de 4</title></circle><circle cx="102.6" cy="232.4" r="4" class="pt-est"><title>RS: 2 de 7</title></circle><circle cx="83.0" cy="249.2" r="4" class="pt-est"><title>RO: 1 de 5</title></circle><circle cx="83.0" cy="249.2" r="4" class="pt-est"><title>SC: 1 de 5</title></circle><circle cx="63.4" cy="266.0" r="4" class="pt-est"><title>SE: 0 de 3</title></circle><circle cx="83.0" cy="198.8" r="4" class="pt-est"><title>TO: 4 de 5</title></circle><circle cx="190.8" cy="198.8" r="4" class="pt-cap"><title>Rio de Janeiro: 4 de 16</title></circle><text x="198.8" y="202.8" class="t-ponto" text-anchor="start">RJ cap.</text><circle cx="161.4" cy="249.2" r="4" class="pt-cap"><title>São Paulo: 1 de 13</title></circle><text x="169.4" y="253.2" class="t-ponto" text-anchor="start">SP cap.</text><circle cx="298.6" cy="215.6" r="4" class="pt-est"><title>AL: 3 de 27</title></circle><text x="290.6" y="219.6" class="t-ponto" text-anchor="end">AL</text><circle cx="181.0" cy="98.0" r="4" class="pt-est"><title>CE: 10 de 15</title></circle><text x="189.0" y="102.0" class="t-ponto" text-anchor="start">CE</text><circle cx="249.6" cy="165.2" r="4" class="pt-est"><title>ES: 6 de 22</title></circle><text x="257.6" y="169.2" class="t-ponto" text-anchor="start">ES</text><circle cx="151.6" cy="114.8" r="4" class="pt-est"><title>MT: 9 de 12</title></circle><text x="159.6" y="118.8" class="t-ponto" text-anchor="start">MT</text><circle cx="161.4" cy="47.6" r="4" class="pt-est"><title>PB: 13 de 13</title></circle><text x="169.4" y="51.6" class="t-ponto" text-anchor="start">PB</text><circle cx="308.4" cy="232.4" r="4" class="pt-est"><title>PA: 2 de 28</title></circle><text x="300.4" y="236.4" class="t-ponto" text-anchor="end">PA</text><circle cx="220.2" cy="266.0" r="4" class="pt-est"><title>RJ: 0 de 19</title></circle><circle cx="269.2" cy="266.0" r="4" class="pt-est"><title>SP: 0 de 24</title></circle></svg><figcaption>Cada ponto é um ente: editais publicados (horizontal) e editais não conformes (vertical). Círculo cheio: estado ou DF; vazado: capital.</figcaption></figure>
+    <p class="limite"><b>Limite.</b> Comparar entes por “cumpre/não cumpre” sem ponderar o número de editais favorece quem publica pouco. A proporção de editais não conformes é a medida mais justa.</p>
+  </div>
+</section>
+<section class="achado" id="a3" aria-labelledby="a3-t">
+  <div class="num" aria-hidden="true">3</div>
+  <div class="corpo">
+    <h2 id="a3-t"><span class="so-leitor">Achado 3. </span>A falha é de desenho do edital, não de arredondamento</h2>
+    <p class="ementa"><span class="par" tabindex="0">§3º<span class="par-txt" role="tooltip"><b>IN 5, §3º</b> Edital dividido em categorias deve ter cotas em todas elas.</span></span>63 de 82 editais não conformes não preveem cota alguma para o grupo ou não a aplicam em cada categoria; só 7 falham apenas na conta de vagas.</p>
+    <p>O motivo mais comum é não haver cota identificada para o grupo. O segundo é declarar o percentual geral sem distribuí-lo pelas categorias, como exige o §3º. Ficar abaixo do mínimo por diferença de arredondamento ou pela exceção de vaga única (§4º) é raro.</p>
+    <figure><div class="hb" style="--rot:290px"><div class="hb-l"><span class="hb-rot">Nenhuma cota identificada</span><span class="hb-trilho"><span class="b-tinta" style="width:100.00%"></span></span><span class="hb-v"><b>38</b></span></div><div class="hb-l"><span class="hb-rot">Cotas não aplicadas por categoria (§3º)</span><span class="hb-trilho"><span class="b-tinta" style="width:65.79%"></span></span><span class="hb-v"><b>25</b></span></div><div class="hb-l"><span class="hb-rot">Categorias abaixo do mínimo ou sem reserva</span><span class="hb-trilho"><span class="b-tinta" style="width:31.58%"></span></span><span class="hb-v"><b>12</b></span></div><div class="hb-l"><span class="hb-rot">Conta de vagas ou total (§2º, §4º)</span><span class="hb-trilho"><span class="b-tinta" style="width:21.05%"></span></span><span class="hb-v"><b>8</b></span></div></div><figcaption>Motivos registrados nos editais não conformes. Um edital pode ter mais de um motivo, então as barras somam mais que o total.</figcaption></figure>
+    <p class="limite"><b>Limite.</b> “Nenhuma cota identificada” pode incluir cotas descritas fora do trecho lido pelo modelo; vale conferir esses editais no PDF antes de qualquer notificação.</p>
+  </div>
+</section>
+<section class="achado" id="a4" aria-labelledby="a4-t">
+  <div class="num" aria-hidden="true">4</div>
+  <div class="corpo">
+    <h2 id="a4-t"><span class="so-leitor">Achado 4. </span>Quando um edital falha, falha para negros e indígenas ao mesmo tempo</h2>
+    <p class="ementa">70 de 82 editais não conformes ficam abaixo do mínimo nos dois grupos.</p>
+    <p>Isso reforça o achado 3: o problema raramente é calibrar um percentual específico, e sim a ausência da política de cotas no edital. A correção de um edital tende a resolver os dois grupos de uma vez.</p><table class="tab mini"><caption class="so-leitor">Situação para negros e indígenas nos editais não conformes</caption>
+<thead><tr><th></th><th>Indígenas conforme</th><th>Indígenas não conforme</th><th>Indígenas indeterminado</th></tr></thead>
+<tbody><tr><th>Negros conforme</th><td>0</td><td>5</td><td>0</td></tr>
+<tr><th>Negros não conforme</th><td>4</td><td class="forte">70</td><td>3</td></tr></tbody></table>
+    
+    <p class="limite"><b>Limite.</b> A tabela considera só os editais classificados como não conformes no total da IN 5.</p>
+  </div>
+</section>
+<section class="achado" id="a5" aria-labelledby="a5-t">
+  <div class="num" aria-hidden="true">5</div>
+  <div class="corpo">
+    <h2 id="a5-t"><span class="so-leitor">Achado 5. </span>Quatro estados concentram 63% dos editais estaduais não conformes</h2>
+    <p class="ementa">Paraíba (13 de 13), Ceará (10 de 15), Mato Grosso (9 de 12) e Espírito Santo (6 de 22) somam 38 dos 60 editais estaduais não conformes.</p>
+    <p>Nas capitais, a não conformidade é dispersa: 12 capitais têm ao menos um edital não conforme, e a que mais tem é Rio de Janeiro, com 4 de 16. Paraíba tem todos os 13 editais da base classificados como não conformes. A concentração sugere que uma orientação dirigida a poucos entes alcançaria a maior parte dos casos estaduais.</p>
+    <figure><div class="hb"><div class="hb-l hb-um"><span class="hb-trilho emp part" role="img" aria-label="38 dos 60 editais estaduais não conformes estão em quatro estados"><span class="b-nao_conforme" style="width:21.67%" title="Paraíba: 13">PB 13</span><span class="b-nao_conforme" style="width:16.67%" title="Ceará: 10">CE 10</span><span class="b-nao_conforme" style="width:15.00%" title="Mato Grosso: 9">MT 9</span><span class="b-nao_conforme" style="width:10.00%" title="Espírito Santo: 6">ES 6</span><span class="b-nao_conforme" style="width:36.67%" title="Demais estados: 22">demais 22</span></span><span class="hb-v"><b>60</b></span></div></div><ul class="lista5"><li><b>Paraíba</b> 13 não conformes de 13 editais</li><li><b>Ceará</b> 10 não conformes de 15 editais</li><li><b>Mato Grosso</b> 9 não conformes de 12 editais</li><li><b>Espírito Santo</b> 6 não conformes de 22 editais</li></ul><figcaption>Participação de cada estado nos editais estaduais não conformes; abaixo, o total de editais de cada um.</figcaption></figure>
+    <p class="limite"><b>Limite.</b> A base reúne os editais localizados para cada ente; um ente com poucos editais na base pode ter publicado outros não incluídos.</p>
+  </div>
+</section>
+<section class="achado" id="a6" aria-labelledby="a6-t">
+  <div class="num" aria-hidden="true">6</div>
+  <div class="corpo">
+    <h2 id="a6-t"><span class="so-leitor">Achado 6. </span>O mínimo da norma virou o padrão</h2>
+    <p class="ementa"><span class="par" tabindex="0">§2º<span class="par-txt" role="tooltip"><b>IN 5, §2º</b> Frações iguais ou maiores que 0,5 arredondam para cima; menores que 0,5, para baixo.</span></span>305 de 318 editais com percentual informado reservam exatamente 20% para pessoas negras, e 310 de 317, exatamente 10% para pessoas indígenas.</p>
+    <p>Quase nenhum ente vai além do piso. Mesmo assim, as vagas efetivamente reservadas somam 20,4% (negros) e 11,7% (indígenas) nos estados, e 21,1% e 11,0% nas capitais: o arredondamento para cima em categorias pequenas (§2º) empurra o agregado acima do percentual declarado, sobretudo no grupo de 10%. Em valor, a reserva estimada para pessoas negras chega a 21,7% nos estados e 23,6% nas capitais.</p>
+    <figure><div class="hb" style="--rot:230px"><div class="hb-l"><span class="hb-rot">20% para pessoas negras</span><span class="hb-trilho"><span class="b-tinta" style="width:98.39%"></span></span><span class="hb-v"><b>305</b> mínimo da IN 5</span></div><div class="hb-l"><span class="hb-rot">25% para pessoas negras</span><span class="hb-trilho"><span class="b-tinta" style="width:1.29%"></span></span><span class="hb-v"><b>4</b></span></div><div class="hb-l"><span class="hb-rot">30% para pessoas negras</span><span class="hb-trilho"><span class="b-tinta" style="width:0.97%"></span></span><span class="hb-v"><b>3</b></span></div><div class="hb-l"><span class="hb-rot">50% para pessoas negras</span><span class="hb-trilho"><span class="b-tinta" style="width:1.94%"></span></span><span class="hb-v"><b>6</b></span></div><div class="hb-l"><span class="hb-rot">10% para pessoas indígenas</span><span class="hb-trilho"><span class="b-tinta" style="width:100.00%"></span></span><span class="hb-v"><b>310</b> mínimo da IN 5</span></div><div class="hb-l"><span class="hb-rot">20% para pessoas indígenas</span><span class="hb-trilho"><span class="b-tinta" style="width:2.26%"></span></span><span class="hb-v"><b>7</b></span></div></div><figcaption>Editais por percentual de reserva declarado.</figcaption></figure>
+    <p class="limite"><b>Limite.</b> Os agregados usam só os editais com vagas totais e reservadas informadas; o valor reservado é estimado pelo valor médio da vaga de cada edital.</p>
+  </div>
+</section>
+<section class="achado" id="a7" aria-labelledby="a7-t">
+  <div class="num" aria-hidden="true">7</div>
+  <div class="corpo">
+    <h2 id="a7-t"><span class="so-leitor">Achado 7. </span>R$ 395 mi estão em editais que não cumprem a IN 5</h2>
+    <p class="ementa">Dos R$ 2,04 bi somados nos editais com valor informado, 19,3% estão em editais não conformes.</p>
+    <p>Os estados respondem por R$ 1,70 bi e as capitais por R$ 344 mi. A mediana do valor por vaga é de R$ 50 mil.</p>
+    <figure><div class="hb" style="--rot:150px"><div class="hb-l"><span class="hb-rot">Conforme</span><span class="hb-trilho"><span class="b-conforme" style="width:100.00%"></span></span><span class="hb-v"><b>R$ 1,56 bi</b> 76,5%</span></div><div class="hb-l"><span class="hb-rot">Não conforme</span><span class="hb-trilho"><span class="b-nao_conforme" style="width:25.28%"></span></span><span class="hb-v"><b>R$ 395 mi</b> 19,3%</span></div><div class="hb-l"><span class="hb-rot">Específico</span><span class="hb-trilho"><span class="b-especifico" style="width:1.56%"></span></span><span class="hb-v"><b>R$ 24 mi</b> 1,2%</span></div><div class="hb-l"><span class="hb-rot">Indeterminado</span><span class="hb-trilho"><span class="b-indeterminado" style="width:3.84%"></span></span><span class="hb-v"><b>R$ 60 mi</b> 2,9%</span></div></div><figcaption>Valor total dos editais por situação na IN 5.</figcaption></figure>
+    <p class="limite"><b>Limite.</b> O valor é o total declarado no edital, não o valor executado; editais retificados ou cancelados depois da publicação não são descontados.</p>
+  </div>
+</section>
+<section class="achado" id="a8" aria-labelledby="a8-t">
+  <div class="num" aria-hidden="true">8</div>
+  <div class="corpo">
+    <h2 id="a8-t"><span class="so-leitor">Achado 8. </span>Distribuir a cota por categoria é o melhor sinal de conformidade</h2>
+    <p class="ementa"><span class="par" tabindex="0">§3º<span class="par-txt" role="tooltip"><b>IN 5, §3º</b> Edital dividido em categorias deve ter cotas em todas elas.</span></span>Entre os editais que dizem não aplicar a cota em cada categoria, 82% são não conformes; entre os que a distribuem, só 11%.</p>
+    <p>A pergunta “o edital distribui a cota pelas categorias?” separa os casos melhor do que tipo de ente, área ou modalidade. É um bom primeiro filtro para uma triagem rápida de novos editais.</p>
+    <figure><div class="hb" style="--rot:270px"><div class="hb-l"><span class="hb-rot">Declara que não aplica por categoria</span><span class="hb-trilho"><span class="b-tinta" style="width:82.05%"></span></span><span class="hb-v"><b>82%</b> 32 de 39</span></div><div class="hb-l"><span class="hb-rot">Não informa</span><span class="hb-trilho"><span class="b-tinta" style="width:16.49%"></span></span><span class="hb-v"><b>16%</b> 16 de 97</span></div><div class="hb-l"><span class="hb-rot">Edital sem categorias</span><span class="hb-trilho"><span class="b-tinta" style="width:19.23%"></span></span><span class="hb-v"><b>19%</b> 15 de 78</span></div><div class="hb-l"><span class="hb-rot">Declara cota por categoria</span><span class="hb-trilho"><span class="b-tinta" style="width:11.24%"></span></span><span class="hb-v"><b>11%</b> 19 de 169</span></div></div><figcaption>Proporção de editais não conformes conforme o edital declara ou não cotas por categoria.</figcaption></figure>
+    <p class="limite"><b>Limite.</b> Parte da relação é mecânica: declarar que não aplica por categoria leva, pelo §3º, à não conformidade.</p>
+  </div>
+</section>
+<section class="achado" id="a9" aria-labelledby="a9-t">
+  <div class="num" aria-hidden="true">9</div>
+  <div class="corpo">
+    <h2 id="a9-t"><span class="so-leitor">Achado 9. </span>Prêmios falham menos que fomento; a área cultural pesa pouco</h2>
+    <p class="ementa">23% dos editais de fomento à execução são não conformes, contra 14% dos prêmios.</p>
+    <p>Audiovisual e demais áreas têm taxas próximas. Entre as modalidades menores, há editais que não selecionam projetos culturais (por exemplo, “Seleção e credenciamento de pareceristas (pessoas físicas ou MEI) para compor o Banco de Pareceristas Técnicos da SECULT…”), aos quais as cotas da IN 5 talvez nem se apliquem.</p>
+    <figure><div class="hb" style="--rot:230px"><div class="hb-l"><span class="hb-rot">Bolsa, subsídio e outras</span><span class="hb-trilho"><span class="b-tinta" style="width:86.96%"></span></span><span class="hb-v"><b>33%</b> 4 de 12</span></div><div class="hb-l"><span class="hb-rot">Fomento à execução</span><span class="hb-trilho"><span class="b-tinta" style="width:60.99%"></span></span><span class="hb-v"><b>23%</b> 65 de 278</span></div><div class="hb-l"><span class="hb-rot">Prêmio</span><span class="hb-trilho"><span class="b-tinta" style="width:36.47%"></span></span><span class="hb-v"><b>14%</b> 13 de 93</span></div><div class="hb-l"><span class="hb-rot">Somente audiovisual</span><span class="hb-trilho"><span class="b-tinta" style="width:49.76%"></span></span><span class="hb-v"><b>19%</b> 33 de 173</span></div><div class="hb-l"><span class="hb-rot">Demais áreas e multilinguagem</span><span class="hb-trilho"><span class="b-tinta" style="width:60.87%"></span></span><span class="hb-v"><b>23%</b> 49 de 210</span></div></div><figcaption>Proporção de editais não conformes por modalidade e por área.</figcaption></figure>
+    <p class="limite"><b>Limite.</b> As modalidades “bolsa, subsídio e outras” somam poucos editais; a taxa delas oscila muito com um caso a mais.</p>
+  </div>
+</section>
+<section class="achado" id="a10" aria-labelledby="a10-t">
+  <div class="num" aria-hidden="true">10</div>
+  <div class="corpo">
+    <h2 id="a10-t"><span class="so-leitor">Achado 10. </span>Além da IN 5, PcD e mulheres são as cotas mais frequentes</h2>
+    <p class="ementa">181 editais preveem alguma cota além de negros e indígenas; pessoas com deficiência aparecem em 93 e mulheres em 84.</p>
+    <p>As cotas para mulheres são as mais altas, com mediana de 40% das vagas. Quilombolas e território são quase exclusivas dos estados (55 de 59 e 51 de 51). Pontuação bônus para grupos aparece em 78% dos editais estaduais e 63% dos de capitais.</p>
+    <figure><div class="hb" style="--rot:190px"><div class="hb-l"><span class="hb-rot">Pessoas com deficiência</span><span class="hb-trilho"><span class="b-tinta" style="width:100.00%"></span></span><span class="hb-v"><b>93</b> 71 estaduais, 22 de capitais</span></div><div class="hb-l"><span class="hb-rot">Mulheres</span><span class="hb-trilho"><span class="b-tinta" style="width:90.32%"></span></span><span class="hb-v"><b>84</b> 69 estaduais, 15 de capitais</span></div><div class="hb-l"><span class="hb-rot">LGBTQIA+</span><span class="hb-trilho"><span class="b-tinta" style="width:75.27%"></span></span><span class="hb-v"><b>70</b> 46 estaduais, 24 de capitais</span></div><div class="hb-l"><span class="hb-rot">Quilombolas</span><span class="hb-trilho"><span class="b-tinta" style="width:63.44%"></span></span><span class="hb-v"><b>59</b> 55 estaduais, 4 de capitais</span></div><div class="hb-l"><span class="hb-rot">Território</span><span class="hb-trilho"><span class="b-tinta" style="width:54.84%"></span></span><span class="hb-v"><b>51</b> 51 estaduais, 0 de capitais</span></div><div class="hb-l"><span class="hb-rot">Pessoas idosas</span><span class="hb-trilho"><span class="b-tinta" style="width:43.01%"></span></span><span class="hb-v"><b>40</b> 38 estaduais, 2 de capitais</span></div><div class="hb-l"><span class="hb-rot">Outros grupos</span><span class="hb-trilho"><span class="b-tinta" style="width:26.88%"></span></span><span class="hb-v"><b>25</b> 19 estaduais, 6 de capitais</span></div><div class="hb-l"><span class="hb-rot">Povos tradicionais</span><span class="hb-trilho"><span class="b-tinta" style="width:26.88%"></span></span><span class="hb-v"><b>25</b> 22 estaduais, 3 de capitais</span></div></div><figcaption>Editais que preveem cada grupo de cota adicional.</figcaption></figure>
+    <p class="limite"><b>Limite.</b> “Território” reúne reservas regionais (interior, regiões administrativas) que não são ações afirmativas para grupos sociais.</p>
+  </div>
+</section>
+    <section class="limites" id="limites" aria-labelledby="lim-t">
+      <h2 class="bloco-t" id="lim-t">Limites da base</h2>
+      <ul><li><b>Cobertura.</b> 25 de 27 UFs e 25 de 26 capitais têm editais na base.</li><li><b>Vagas.</b> 84 editais (22%) não informam o total de vagas, e 67% das 1.918 categorias não trazem vagas para negros explicitadas.</li><li><b>Leitura.</b> 16 PDFs escaneados foram lidos como imagem; neles a não conformidade é de 31%, contra 21% nos lidos como texto, o que pode refletir erro de leitura.</li><li><b>Revisão.</b> 15 editais indeterminados, 2 sem leitura e 87 com outras cotas marcadas para revisão manual.</li><li><b>Evidência.</b> 2.163 trechos citados, cerca de 5,6 por edital; a mediana da página citada é 3, e os editais têm mediana de 26 páginas.</li></ul>
+    </section>
+    <footer class="rodape"><p class="metodo">Base: <code>data/final/lpg_editais.xlsx</code> (abas editais, categorias, outras_cotas e evidencias), gerada pelo pipeline do projeto. Extração estruturada com LLM e regras do art. 5º da IN MinC nº 5/2023 aplicadas em código. Este relatório foi gerado em 16/10/2026 por <code>src/relatorio_exploratorio.py</code>; todos os números são recalculados a cada execução.</p></footer>
+  </main>
+</div>
+</body>
+</html>

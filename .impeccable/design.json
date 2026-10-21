@@ -1,0 +1,549 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-16T18:28:57+00:00",
+  "title": "Design System: Cotas LPG",
+  "extensions": {
+    "colorMeta": {
+      "papel": {
+        "role": "neutral",
+        "displayName": "Papel",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(37% 0.000 89.9)",
+          "oklch(48% 0.000 89.9)",
+          "oklch(59% 0.000 89.9)",
+          "oklch(70% 0.000 89.9)",
+          "oklch(82% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "lavado": {
+        "role": "neutral",
+        "displayName": "Lavado",
+        "canonical": "#f3f5f4",
+        "tonalRamp": [
+          "oklch(15% 0.002 165.1)",
+          "oklch(26% 0.002 165.1)",
+          "oklch(37% 0.002 165.1)",
+          "oklch(48% 0.002 165.1)",
+          "oklch(59% 0.002 165.1)",
+          "oklch(70% 0.002 165.1)",
+          "oklch(82% 0.002 165.1)",
+          "oklch(95% 0.002 165.1)"
+        ]
+      },
+      "lavado-2": {
+        "role": "neutral",
+        "displayName": "Lavado 2",
+        "canonical": "#e9eeeb",
+        "tonalRamp": [
+          "oklch(15% 0.007 160.1)",
+          "oklch(26% 0.007 160.1)",
+          "oklch(37% 0.007 160.1)",
+          "oklch(48% 0.007 160.1)",
+          "oklch(59% 0.007 160.1)",
+          "oklch(70% 0.007 160.1)",
+          "oklch(82% 0.007 160.1)",
+          "oklch(95% 0.007 160.1)"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#16191d",
+        "tonalRamp": [
+          "oklch(15% 0.009 255.6)",
+          "oklch(26% 0.009 255.6)",
+          "oklch(37% 0.009 255.6)",
+          "oklch(48% 0.009 255.6)",
+          "oklch(59% 0.009 255.6)",
+          "oklch(70% 0.009 255.6)",
+          "oklch(82% 0.009 255.6)",
+          "oklch(95% 0.009 255.6)"
+        ]
+      },
+      "tinta-2": {
+        "role": "neutral",
+        "displayName": "Tinta 2",
+        "canonical": "#444a52",
+        "tonalRamp": [
+          "oklch(15% 0.016 255.6)",
+          "oklch(26% 0.016 255.6)",
+          "oklch(37% 0.016 255.6)",
+          "oklch(48% 0.016 255.6)",
+          "oklch(59% 0.016 255.6)",
+          "oklch(70% 0.016 255.6)",
+          "oklch(82% 0.016 255.6)",
+          "oklch(95% 0.016 255.6)"
+        ]
+      },
+      "tinta-3": {
+        "role": "neutral",
+        "displayName": "Tinta 3",
+        "canonical": "#5d636b",
+        "tonalRamp": [
+          "oklch(15% 0.015 255.6)",
+          "oklch(26% 0.015 255.6)",
+          "oklch(37% 0.015 255.6)",
+          "oklch(48% 0.015 255.6)",
+          "oklch(59% 0.015 255.6)",
+          "oklch(70% 0.015 255.6)",
+          "oklch(82% 0.015 255.6)",
+          "oklch(95% 0.015 255.6)"
+        ]
+      },
+      "fio": {
+        "role": "neutral",
+        "displayName": "Fio",
+        "canonical": "#dcdfe3",
+        "tonalRamp": [
+          "oklch(15% 0.006 255.5)",
+          "oklch(26% 0.006 255.5)",
+          "oklch(37% 0.006 255.5)",
+          "oklch(48% 0.006 255.5)",
+          "oklch(59% 0.006 255.5)",
+          "oklch(70% 0.006 255.5)",
+          "oklch(82% 0.006 255.5)",
+          "oklch(95% 0.006 255.5)"
+        ]
+      },
+      "fio-2": {
+        "role": "neutral",
+        "displayName": "Fio 2",
+        "canonical": "#edeff1",
+        "tonalRamp": [
+          "oklch(15% 0.003 247.9)",
+          "oklch(26% 0.003 247.9)",
+          "oklch(37% 0.003 247.9)",
+          "oklch(48% 0.003 247.9)",
+          "oklch(59% 0.003 247.9)",
+          "oklch(70% 0.003 247.9)",
+          "oklch(82% 0.003 247.9)",
+          "oklch(95% 0.003 247.9)"
+        ]
+      },
+      "fio-forte": {
+        "role": "neutral",
+        "displayName": "Fio Forte",
+        "canonical": "#c9ced3",
+        "tonalRamp": [
+          "oklch(15% 0.009 247.9)",
+          "oklch(26% 0.009 247.9)",
+          "oklch(37% 0.009 247.9)",
+          "oklch(48% 0.009 247.9)",
+          "oklch(59% 0.009 247.9)",
+          "oklch(70% 0.009 247.9)",
+          "oklch(82% 0.009 247.9)",
+          "oklch(95% 0.009 247.9)"
+        ]
+      },
+      "verde": {
+        "role": "primary",
+        "displayName": "Verde Institucional",
+        "canonical": "#1f5f45",
+        "tonalRamp": [
+          "oklch(15% 0.078 162.9)",
+          "oklch(26% 0.078 162.9)",
+          "oklch(37% 0.078 162.9)",
+          "oklch(48% 0.078 162.9)",
+          "oklch(59% 0.078 162.9)",
+          "oklch(70% 0.078 162.9)",
+          "oklch(82% 0.078 162.9)",
+          "oklch(95% 0.078 162.9)"
+        ]
+      },
+      "verde-2": {
+        "role": "primary",
+        "displayName": "Verde Fundo de Trilho",
+        "canonical": "#174a36",
+        "tonalRamp": [
+          "oklch(15% 0.065 163.9)",
+          "oklch(26% 0.065 163.9)",
+          "oklch(37% 0.065 163.9)",
+          "oklch(48% 0.065 163.9)",
+          "oklch(59% 0.065 163.9)",
+          "oklch(70% 0.065 163.9)",
+          "oklch(82% 0.065 163.9)",
+          "oklch(95% 0.065 163.9)"
+        ]
+      },
+      "verde-3": {
+        "role": "primary",
+        "displayName": "Verde Lavado",
+        "canonical": "#e4efe9",
+        "tonalRamp": [
+          "oklch(15% 0.014 162.5)",
+          "oklch(26% 0.014 162.5)",
+          "oklch(37% 0.014 162.5)",
+          "oklch(48% 0.014 162.5)",
+          "oklch(59% 0.014 162.5)",
+          "oklch(70% 0.014 162.5)",
+          "oklch(82% 0.014 162.5)",
+          "oklch(95% 0.014 162.5)"
+        ]
+      },
+      "verde-txt": {
+        "role": "primary",
+        "displayName": "Verde Texto de Trilho",
+        "canonical": "#dfece5",
+        "tonalRamp": [
+          "oklch(15% 0.017 162.7)",
+          "oklch(26% 0.017 162.7)",
+          "oklch(37% 0.017 162.7)",
+          "oklch(48% 0.017 162.7)",
+          "oklch(59% 0.017 162.7)",
+          "oklch(70% 0.017 162.7)",
+          "oklch(82% 0.017 162.7)",
+          "oklch(95% 0.017 162.7)"
+        ]
+      },
+      "ok": {
+        "role": "secondary",
+        "displayName": "Conforme",
+        "canonical": "#1f5f45",
+        "tonalRamp": [
+          "oklch(15% 0.078 162.9)",
+          "oklch(26% 0.078 162.9)",
+          "oklch(37% 0.078 162.9)",
+          "oklch(48% 0.078 162.9)",
+          "oklch(59% 0.078 162.9)",
+          "oklch(70% 0.078 162.9)",
+          "oklch(82% 0.078 162.9)",
+          "oklch(95% 0.078 162.9)"
+        ]
+      },
+      "nc": {
+        "role": "secondary",
+        "displayName": "Tijolo Discreto",
+        "canonical": "#9e3a2b",
+        "tonalRamp": [
+          "oklch(15% 0.120 31.0)",
+          "oklch(26% 0.120 31.0)",
+          "oklch(37% 0.120 31.0)",
+          "oklch(48% 0.120 31.0)",
+          "oklch(59% 0.120 31.0)",
+          "oklch(70% 0.120 31.0)",
+          "oklch(82% 0.120 31.0)",
+          "oklch(95% 0.120 31.0)"
+        ]
+      },
+      "nc-lav": {
+        "role": "secondary",
+        "displayName": "Lavado Tijolo",
+        "canonical": "#f6ebe8",
+        "tonalRamp": [
+          "oklch(15% 0.013 35.7)",
+          "oklch(26% 0.013 35.7)",
+          "oklch(37% 0.013 35.7)",
+          "oklch(48% 0.013 35.7)",
+          "oklch(59% 0.013 35.7)",
+          "oklch(70% 0.013 35.7)",
+          "oklch(82% 0.013 35.7)",
+          "oklch(95% 0.013 35.7)"
+        ]
+      },
+      "esp": {
+        "role": "secondary",
+        "displayName": "Azul-Aço",
+        "canonical": "#3e6e8e",
+        "tonalRamp": [
+          "oklch(15% 0.073 239.5)",
+          "oklch(26% 0.073 239.5)",
+          "oklch(37% 0.073 239.5)",
+          "oklch(48% 0.073 239.5)",
+          "oklch(59% 0.073 239.5)",
+          "oklch(70% 0.073 239.5)",
+          "oklch(82% 0.073 239.5)",
+          "oklch(95% 0.073 239.5)"
+        ]
+      },
+      "esp-lav": {
+        "role": "secondary",
+        "displayName": "Lavado Aço",
+        "canonical": "#e8f0f5",
+        "tonalRamp": [
+          "oklch(15% 0.011 234.8)",
+          "oklch(26% 0.011 234.8)",
+          "oklch(37% 0.011 234.8)",
+          "oklch(48% 0.011 234.8)",
+          "oklch(59% 0.011 234.8)",
+          "oklch(70% 0.011 234.8)",
+          "oklch(82% 0.011 234.8)",
+          "oklch(95% 0.011 234.8)"
+        ]
+      },
+      "ind": {
+        "role": "secondary",
+        "displayName": "Âmbar Texto",
+        "canonical": "#8c5a0e",
+        "tonalRamp": [
+          "oklch(15% 0.120 69.7)",
+          "oklch(26% 0.120 69.7)",
+          "oklch(37% 0.120 69.7)",
+          "oklch(48% 0.120 69.7)",
+          "oklch(59% 0.120 69.7)",
+          "oklch(70% 0.120 69.7)",
+          "oklch(82% 0.120 69.7)",
+          "oklch(95% 0.120 69.7)"
+        ]
+      },
+      "ind-cor": {
+        "role": "secondary",
+        "displayName": "Âmbar",
+        "canonical": "#c48a2a",
+        "tonalRamp": [
+          "oklch(15% 0.120 75.1)",
+          "oklch(26% 0.120 75.1)",
+          "oklch(37% 0.120 75.1)",
+          "oklch(48% 0.120 75.1)",
+          "oklch(59% 0.120 75.1)",
+          "oklch(70% 0.120 75.1)",
+          "oklch(82% 0.120 75.1)",
+          "oklch(95% 0.120 75.1)"
+        ]
+      },
+      "ind-lav": {
+        "role": "secondary",
+        "displayName": "Lavado Âmbar",
+        "canonical": "#f8f0e1",
+        "tonalRamp": [
+          "oklch(15% 0.022 83.3)",
+          "oklch(26% 0.022 83.3)",
+          "oklch(37% 0.022 83.3)",
+          "oklch(48% 0.022 83.3)",
+          "oklch(59% 0.022 83.3)",
+          "oklch(70% 0.022 83.3)",
+          "oklch(82% 0.022 83.3)",
+          "oklch(95% 0.022 83.3)"
+        ]
+      },
+      "sl": {
+        "role": "secondary",
+        "displayName": "Cinza de Leitura",
+        "canonical": "#8a9097",
+        "tonalRamp": [
+          "oklch(15% 0.013 252.1)",
+          "oklch(26% 0.013 252.1)",
+          "oklch(37% 0.013 252.1)",
+          "oklch(48% 0.013 252.1)",
+          "oklch(59% 0.013 252.1)",
+          "oklch(70% 0.013 252.1)",
+          "oklch(82% 0.013 252.1)",
+          "oklch(95% 0.013 252.1)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "titulo-pagina": {
+        "displayName": "Título de página",
+        "purpose": "Um por rota, no cabeçalho."
+      },
+      "cabecalho-secao": {
+        "displayName": "Cabeçalho de seção",
+        "purpose": "Caixa alta sobre fio de 2px em tinta; 12.5px nos blocos da ficha."
+      },
+      "numero-total": {
+        "displayName": "Número total",
+        "purpose": "Linha de totais dos resumos."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Base da interface, algarismos tabulares."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Cabeçalhos de coluna em caixa alta; também a etiqueta §."
+      },
+      "ementa": {
+        "displayName": "Ementa",
+        "purpose": "Veredito resumido do ente e objeto na lista de editais (13 a 13.5px)."
+      },
+      "objeto": {
+        "displayName": "Objeto",
+        "purpose": "Objeto do edital na ficha, máx. 70ch."
+      },
+      "trecho": {
+        "displayName": "Trecho",
+        "purpose": "Trecho literal citado nas evidências."
+      }
+    },
+    "shadows": [
+      {
+        "name": "tooltip-remissao",
+        "value": "0 6px 18px rgba(16, 24, 32, .22)",
+        "purpose": "Somente no texto revelado da remissão §."
+      },
+      {
+        "name": "trilho-ativo",
+        "value": "inset 3px 0 0 #fff",
+        "purpose": "Fio do item ativo do trilho (inset 0 -3px 0 #fff no móvel); não é elevação."
+      }
+    ],
+    "motion": [
+      {
+        "name": "sai",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Saída suave: tooltip da remissão e abertura das barras."
+      },
+      {
+        "name": "estado",
+        "value": "150ms",
+        "purpose": "Hover de linhas, botões, segmentos e trilho."
+      },
+      {
+        "name": "remissao",
+        "value": "160ms",
+        "purpose": "Entrada do texto da remissão (opacidade e 3px)."
+      },
+      {
+        "name": "barra-abre",
+        "value": "700ms, clip-path a partir da esquerda",
+        "purpose": "Barras empilhadas, só com prefers-reduced-motion: no-preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "movel",
+        "value": "760px"
+      },
+      {
+        "name": "lista-editais",
+        "value": "980px"
+      },
+      {
+        "name": "colunas",
+        "value": "1240px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão",
+      "kind": "button",
+      "refersTo": "botao",
+      "description": "Ação de navegação na ficha (Anterior/Próximo).",
+      "html": "<a class=\"ds-btn\" href=\"#\"><span class=\"ds-ico\"></span>Anterior</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--tinta);text-decoration:none;border:1px solid var(--fio-forte);border-radius:var(--raio);padding:5px 11px;background:var(--papel);transition:background .15s,border-color .15s}.ds-btn:hover{background:var(--lavado);border-color:var(--tinta-3)}.ds-btn:focus-visible{outline:2px solid var(--verde);outline-offset:2px}.ds-ico{width:7px;height:7px;border-left:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(45deg);margin-left:2px}"
+    },
+    {
+      "name": "Botão desligado",
+      "kind": "button",
+      "refersTo": "botao-desligado",
+      "description": "Fim da fila: sem anterior ou próximo.",
+      "html": "<span class=\"ds-btn-off\">Próximo</span>",
+      "css": ".ds-btn-off{display:inline-flex;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--tinta-3);background:var(--lavado);border:1px dashed var(--fio-forte);border-radius:var(--raio);padding:5px 11px;cursor:not-allowed}"
+    },
+    {
+      "name": "Seletor segmentado",
+      "kind": "chip",
+      "refersTo": "segmento",
+      "description": "Filtros de grupo, modalidade e ordem.",
+      "html": "<div class=\"ds-seg\"><label class=\"ds-on\">Todas</label><label>Fomento</label><label>Prêmio</label></div>",
+      "css": ".ds-seg{display:inline-flex;border:1px solid var(--fio-forte);border-radius:var(--raio);background:var(--papel);overflow:hidden}.ds-seg label{cursor:pointer;padding:5px 11px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--tinta-2);border-right:1px solid var(--fio-forte);transition:background .15s,color .15s}.ds-seg label:last-child{border-right:0}.ds-seg label:hover{background:var(--lavado);color:var(--tinta)}.ds-seg label.ds-on{background:var(--tinta);color:#fff}"
+    },
+    {
+      "name": "Busca",
+      "kind": "input",
+      "refersTo": "busca",
+      "description": "Busca por ente, arquivo ou objeto.",
+      "html": "<input class=\"ds-busca\" placeholder=\"Buscar ente, arquivo ou objeto\">",
+      "css": ".ds-busca{width:280px;max-width:100%;font-family:var(--sans);font-size:13px;color:var(--tinta);border:1px solid var(--fio-forte);border-radius:var(--raio);padding:6px 10px;background:var(--papel)}.ds-busca::placeholder{color:var(--tinta-3)}.ds-busca:focus{outline:2px solid var(--verde);outline-offset:-1px;border-color:var(--verde)}"
+    },
+    {
+      "name": "Trilho de navegação",
+      "kind": "nav",
+      "refersTo": "trilho-item",
+      "description": "Navegação principal em verde institucional.",
+      "html": "<nav class=\"ds-trilho\"><div class=\"ds-sec\">Painel</div><a class=\"ds-on\" href=\"#\">Visão geral</a><a href=\"#\">Estados e DF <span>25</span></a><a href=\"#\">Capitais <span>25</span></a></nav>",
+      "css": ".ds-trilho{background:var(--verde);color:var(--verde-txt);width:232px;padding:8px 0;font-family:var(--sans);font-size:14px}.ds-sec{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:#bcd3c6;padding:12px 22px 6px}.ds-trilho a{display:flex;justify-content:space-between;padding:9px 22px;font-weight:500;color:inherit;text-decoration:none;transition:background .15s}.ds-trilho a span{font-size:12.5px;color:#c6dccf}.ds-trilho a:hover{background:rgba(255,255,255,.07);color:#fff}.ds-trilho a.ds-on{background:var(--verde-2);color:#fff;box-shadow:inset 3px 0 0 #fff}.ds-trilho a:focus-visible{outline:2px solid #fff;outline-offset:-3px}"
+    },
+    {
+      "name": "Abas",
+      "kind": "nav",
+      "refersTo": "aba",
+      "description": "Abas de situação na revisão.",
+      "html": "<div class=\"ds-abas\"><a class=\"ds-aba ds-aba-on\" href=\"#\">Não conformes <span>82</span></a><a class=\"ds-aba\" href=\"#\">Indeterminados <span>15</span></a></div>",
+      "css": ".ds-abas{display:flex;gap:2px;border-bottom:1px solid var(--fio)}.ds-aba{padding:8px 14px 9px;font-family:var(--sans);font-weight:500;font-size:13.5px;color:var(--tinta-2);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px;display:flex;gap:8px}.ds-aba span{color:var(--tinta-3);font-size:12.5px}.ds-aba:hover{color:var(--tinta);border-bottom-color:var(--fio-forte)}.ds-aba:focus-visible{outline:2px solid var(--verde);outline-offset:2px}.ds-aba-on{color:var(--tinta);font-weight:600;border-bottom-color:var(--verde)}"
+    },
+    {
+      "name": "Selos de situação",
+      "kind": "chip",
+      "refersTo": "selo-conforme",
+      "description": "Situação de um edital pelos cinco estados.",
+      "html": "<div class=\"ds-selos\"><span class=\"ds-selo ds-ok\">Conforme</span><span class=\"ds-selo ds-nc\">Não conforme</span><span class=\"ds-selo ds-esp\">Específico</span><span class=\"ds-selo ds-ind\">Indeterminado</span><span class=\"ds-selo ds-sl\">Sem leitura</span></div>",
+      "css": ".ds-selos{display:flex;gap:8px;flex-wrap:wrap}.ds-selo{font-family:var(--sans);font-size:12px;font-weight:600;padding:2px 8px;border-radius:var(--raio);border:1px solid;white-space:nowrap}.ds-ok{color:var(--ok);border-color:#b2cbbe;background:var(--verde-3)}.ds-nc{color:var(--nc);border-color:#e2c2bb;background:var(--nc-lav)}.ds-esp{color:var(--esp);border-color:#bcd0de;background:var(--esp-lav)}.ds-ind{color:var(--ind);border-color:#e6cfa6;background:var(--ind-lav)}.ds-sl{color:var(--tinta-2);border-color:var(--fio-forte);background:var(--lavado)}"
+    },
+    {
+      "name": "Remissão §",
+      "kind": "custom",
+      "refersTo": "remissao",
+      "description": "Assinatura: etiqueta do parágrafo da IN 5 que revela o texto em hover/foco.",
+      "html": "<p class=\"ds-ementa\"><span class=\"ds-par\" tabindex=\"0\">§3º<span class=\"ds-par-txt\"><b>IN 5, §3º</b> Texto resumido do parágrafo.</span></span>1 edital: categorias abaixo do mínimo</p>",
+      "css": ".ds-ementa{font-family:var(--serif);font-size:13px;color:var(--tinta-2);margin:0 0 90px}.ds-par{position:relative;display:inline-block;font:600 11.5px/1.5 var(--sans);color:var(--verde);border:1px solid #b2cbbe;background:var(--verde-3);padding:0 5px;border-radius:2px;margin-right:6px;cursor:help}.ds-par-txt{position:absolute;z-index:5;left:0;top:calc(100% + 6px);width:280px;background:var(--tinta);color:#f1f3f4;font:400 12.5px/1.45 var(--sans);padding:9px 11px;border-radius:var(--raio);box-shadow:0 6px 18px rgba(16,24,32,.22);opacity:0;transform:translateY(-3px);pointer-events:none;transition:opacity .16s var(--sai),transform .16s var(--sai)}.ds-par-txt b{color:#fff;font-weight:600}.ds-par:hover .ds-par-txt,.ds-par:focus .ds-par-txt{opacity:1;transform:none}.ds-par:focus-visible{outline:2px solid var(--verde);outline-offset:2px}"
+    },
+    {
+      "name": "Linha de ente",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Assinatura: colunas fixas em que o status reestiliza marcador, barra e situação.",
+      "html": "<a class=\"ds-linha ds-nao\" href=\"#\"><span class=\"ds-nm\">Acre</span><span class=\"ds-num\">4</span><span class=\"ds-barra\"><i style=\"width:50%;background:var(--ok)\"></i><i style=\"width:25%;background:var(--nc)\"></i><i style=\"width:25%;background:var(--esp)\"></i></span><span class=\"ds-sit\">1 de 4 não conformes</span></a>",
+      "css": ".ds-linha{display:grid;grid-template-columns:minmax(130px,1.2fr) 48px minmax(0,2.4fr) 152px;column-gap:14px;align-items:center;padding:8px 0;min-height:46px;border-bottom:1px solid var(--fio-2);font-family:var(--sans);font-size:14px;color:var(--tinta);text-decoration:none;transition:background .15s}.ds-linha:hover{background:var(--lavado)}.ds-linha:focus-visible{outline:2px solid var(--verde);outline-offset:2px}.ds-nm{font-weight:600;display:flex;align-items:baseline;gap:8px}.ds-nm::before{content:'';width:8px;height:8px;background:var(--fio-forte)}.ds-nao .ds-nm::before{background:var(--nc)}.ds-num{text-align:right;color:var(--tinta-2);font-variant-numeric:tabular-nums}.ds-barra{display:flex;height:9px;background:var(--fio-2)}.ds-barra i{display:block}.ds-sit{text-align:right;font-size:12.5px;font-weight:600}.ds-nao .ds-sit{color:var(--nc)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A Gazeta Oficial em Tela",
+    "overview": "O painel se comporta como uma seção de atos do Diário Oficial: papel branco, tinta quase preta, fios finos separando cada ato e um único trilho de navegação em verde institucional. Cada ente e cada edital é tratado como um ato publicado: um veredito curto em linguagem de ementa, a remissão ao parágrafo da IN 5 que o fundamenta e, a um clique, o trecho literal e a página do edital.\n\nA densidade é de ferramenta de trabalho. Linhas em colunas fixas, números tabulares, rótulos pequenos e nenhuma moldura decorativa: não há cartões nem sombras de superfície, e a hierarquia vem de fios (1px para separar, 2px de tinta para abrir uma seção), peso tipográfico e da troca entre o grotesco de interface e a serifa de texto. A cor carrega estado, não decoração; o vermelho é tijolo discreto, nunca alarme, porque abaixo do mínimo não é automaticamente descumprimento.\n\nA incerteza é desenhada, não escondida: \"sem leitura\" tem hachura própria, entes ausentes da base aparecem como linha tracejada \"sem editais na base\", e indeterminado tem cor própria (âmbar), distinta de não conforme.",
+    "keyCharacteristics": [
+      "Papel branco plano, tinta quase preta, verde institucional restrito ao trilho, à remissão e a ações de prova.",
+      "Cinco estados com cor fixa: conforme, não conforme, específico, indeterminado, sem leitura.",
+      "Grotesco (Public Sans) na interface; serifa (Source Serif 4) só em ementas, objeto e trechos citados.",
+      "Fios de 1px; cabeçalho de seção com fio de 2px em tinta; sem cartões, sem sombras de superfície.",
+      "Colunas fixas em que o status reestiliza a linha inteira; refluxo por células inteiras.",
+      "Remissão § como etiqueta que revela o texto do parágrafo em hover/foco."
+    ],
+    "rules": [
+      {
+        "name": "A Regra da Cor de Estado",
+        "body": "As cinco cores de estado significam apenas estado. Nenhum elemento decorativo, gráfico neutro ou destaque usa ok, nc, esp ou ind; magnitudes neutras usam tinta-2.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra do Tijolo Discreto",
+        "body": "Não conforme aparece em marcas pequenas (quadrado de 8px, segmento de barra, texto de situação, selo com lavado). Nunca pinta uma linha, cartão ou cabeçalho inteiro.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra da Voz Citada",
+        "body": "A serifa é reservada à ementa e ao texto do edital. Rótulos, números, controles e navegação são sempre Public Sans.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra do Algarismo Tabular",
+        "body": "Todo número usa `tabular-nums lining-nums` e se alinha à direita em colunas.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra do Papel Plano",
+        "body": "Superfícies não flutuam. Separação se faz com fio de 1px (fio ou fio-2) ou fio de 2px em tinta; sombra só existe na camada flutuante da remissão.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** separar blocos com fio de 1px (fio) e linhas com fio-2; abra seções com cabeçalho em caixa alta sobre fio de 2px em tinta.",
+      "**Do** usar as cinco cores de estado somente para estado, sempre com seu lavado em selos e com hachura diagonal para sem leitura.",
+      "**Do** manter números em algarismos tabulares e alinhados à direita.",
+      "**Do** levar todo número de conformidade a um link de prova (verde, sublinhado fino) que abre o trecho e a página.",
+      "**Do** refluir por células inteiras nos pontos 1240px, 980px e 760px, em vez de comprimir colunas.",
+      "**Do** usar a serifa apenas para ementas, objeto e trechos do edital."
+    ],
+    "donts": [
+      "**Don't** usar cartões, sombras de superfície ou fundos coloridos de área; a única sombra é a do tooltip da remissão.",
+      "**Don't** pintar linhas ou blocos inteiros de tijolo, nem ordenar entes como ranking de piores.",
+      "**Don't** fundir indeterminado ou sem leitura com não conforme; cada um tem marca própria.",
+      "**Don't** usar o verde institucional como decoração; ele marca navegação, remissão, prova, foco e conforme.",
+      "**Don't** arredondar além de 3px nem usar glifos de ícone; chevrons e marcadores são desenhados em CSS."
+    ]
+  }
+}

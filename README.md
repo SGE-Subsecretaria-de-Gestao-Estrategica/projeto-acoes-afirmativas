@@ -1,160 +1,72 @@
-# Ações Afirmativas na Política Nacional Aldir Blanc – Ciclo 1: Análise da Implementação nos Estados, DF e Capitais (2023–2025)
+# Ações Afirmativas na Lei Paulo Gustavo: verificação das cotas nos editais dos Estados, DF e Capitais
 
-
-**Acesso à pesquisa completa:** [AÇÕES AFIRMATIVAS NA POLÍTICA NACIONAL ALDIR BLANC DE FOMENTO À CULTURA - Uma análise da implementação pelos Estados, DF e Capitais entre 2023 e 2025](https://drive.google.com/file/d/1ABaTJ2YhQUhWngtDE7m0XKqxxdIpD4Nk/view) 
-
-**Acesso aos dados consolidados:** [Repositório de editais levantados na pesquisa Aldir Blanc – Ciclo 1 estados DF e capitais](https://culturagov-my.sharepoint.com/:f:/g/personal/sniic_cultura_gov_br/IgBqI1YVPorFQ7WUo--s2PxZAYnL2nC0J5n5zxgVImNCqlQ?e=Ylf756)  
-*Este repositório contém a base de dados simplificada gerada a partir do processo de extração e sistematização descrito abaixo.*
-
+> Branch `lpg`: adaptação do pipeline usado na pesquisa da Política Nacional Aldir Blanc (PNAB, ciclo 1) para os editais da **Lei Complementar nº 195/2022 (Lei Paulo Gustavo - LPG)**.
 
 ## 📖 Visão Geral
 
-* Este projeto foi desenvolvido para interpretar, estruturar e analisar editais culturais do ciclo 1 da Política Nacional Aldir Blanc de Fomento à Cultura, transformando documentos em PDF em informações computacionais acessíveis.
+O objetivo é verificar se os editais de fomento publicados com recursos da LPG cumprem as cotas da [Instrução Normativa MinC nº 5/2023](https://www.in.gov.br/en/web/dou/-/instrucao-normativa-minc-n-5-de-10-de-agosto-de-2023-502407937), art. 5º:
 
-* A pipeline utiliza processamento de texto, pré-processamento estruturado e modelos de linguagem (LLMs) para identificar e organizar dados-chave, com destaque para a detecção de ações afirmativas (cotas, vagas reservadas, critérios de inclusão etc.).
+- no mínimo **20% das vagas para pessoas negras** (pretas ou pardas) e **10% para pessoas indígenas**;
+- **§2º** frações iguais ou maiores que 0,5 arredondam para cima e menores que 0,5 para baixo;
+- **§3º** editais divididos em categorias devem ter cotas em **todas** elas;
+- **§4º** categoria com uma única vaga pode ir para a ampla concorrência, desde que o edital como um todo reserve 20% e 10%.
 
-
-## 🛠️ Funcionalidades
-
-### Leitura de PDFs
-
-- Interpretação automática de editais em PDF.
-
-- Conversão para linguagem computacional estruturada.
-
-
-### Pré-processamento inteligente
-
-- Criação de filtros para limpeza e padronização de textos.
-
-- Divisão dos editais em chunks (partes relevantes para análise).
-
-
-### Extração de informações com LLMs
-
-- Identificação de menções a ações afirmativas.
-
-- Retorno estruturado em formato padronizado (ex.: JSON).
-
-
-## 🎯 Objetivos
-
-- Facilitar o monitoramento de políticas públicas de fomento cultural.
-
-- Apoiar o Programa Nacional Aldir Blanc na análise de editais.
-
-- Fornecer uma base estruturada para dashboards, relatórios e análises.
-
+Além disso, o pipeline levanta outras cotas (PcD, mulheres, LGBTQIA+, quilombolas etc.), pontuações bônus, objeto, modalidade, valor total, número de vagas e a tabela de categorias (vagas e valores) de cada edital.
 
 ## 📂 Estrutura do Projeto
-<br>    ├── data/     # PDFs e arquivos de entrada
-<br>    ├── outputs/  # Resultados processados (JSON, CSV, etc.)
-<br>    ├── src/   # Código-fonte principal
-<br>    &nbsp;&nbsp;&nbsp;&nbsp;   ├── main.py   # Código principal
-<br>    &nbsp;&nbsp;&nbsp;&nbsp;   ├── regex_patterns.py   # Padrões de regex utilizados nos filtros
-<br>    &nbsp;&nbsp;&nbsp;&nbsp;   └── utils.py   # Funções auxiliares
-<br>    ├── requirements.txt # Dependências do projeto
-<br>    └── README.md # Este arquivo
+<br>    ├── data/EDITAIS/            # PDFs: {Capitais,Estados}/<ente>/*.pdf (só a raiz de cada ente é lida)
+<br>    ├── data/interim/LPG/        # Markdown, manifesto, respostas brutas, gastos (gerados)
+<br>    ├── data/final/lpg_editais.xlsx  # Resultado
+<br>    ├── src/main.py              # Orquestrador das etapas
+<br>    ├── src/extract/pdf_to_md.py # Conversão PDF -> Markdown (PyMuPDF)
+<br>    ├── src/llm/                 # Prompt, schema, extração (Claude) e controle de orçamento
+<br>    ├── src/transform/conformidade.py # Regras da IN 5 em código
+<br>    ├── src/transform/consolida_lpg.py # Planilha final
+<br>    └── tests/                   # Testes das regras de cota
 
-
-## 📊 Fluxo de extração e tratamento dos dados
-
-O processo de extração e tratamento dos dados desenvolvido na pesquisa pode ser resumido nas seguintes etapas:
+## 📊 Fluxo de extração
 
 ### 1. Conversão de PDF para Markdown
+Cada edital é convertido com **PyMuPDF (pymupdf4llm)**, que preserva as tabelas em Markdown, com um marcador `<!-- página N -->` no início de cada página. PDFs escaneados (sem camada de texto) são recomprimidos e enviados ao modelo como PDF, que lê as páginas como imagem.
 
-- Inicialmente, os arquivos em PDF foram convertidos para o formato **Markdown**, um padrão textual leve e legível que preserva a hierarquia e a organização lógica do conteúdo, facilitando a análise posterior.  
+### 2. Edital inteiro em uma única chamada
+Diferente da PNAB, **não há divisão em blocos nem filtro por regex**: o edital completo é enviado ao modelo. Isso evita cortar as tabelas de categorias (necessárias para o §3º) e perder trechos, como o objeto, que não casam com os padrões de busca.
 
-- Utilizou-se a biblioteca **Docling**, ferramenta de código aberto reconhecida por sua robustez na preservação da estrutura textual e por contar com ampla comunidade de manutenção.
+### 3. Extração estruturada com LLM
+Modelo **Claude Sonnet 5.5** (`claude-sonnet-5-5`), via Message Batches API, com **saída estruturada** (JSON validado por um schema Pydantic, `src/llm/schema.py`). Para cada campo-chave o modelo devolve o trecho literal e a página como evidência. O modelo só extrai: não calcula vagas nem julga conformidade.
 
----
+### 4. Regras da IN 5 em código
+`src/transform/conformidade.py` aplica as regras (percentuais mínimos, arredondamento do §2º, categorias do §3º e exceção do §4º) e classifica cada edital como `conforme`, `nao_conforme`, `indeterminado`, `especifico` (edital dirigido integralmente a um grupo) ou `nao_aplicavel` (retificação, resultado etc.), com o motivo.
 
-### 2. Limpeza e padronização dos dados
+### 5. Controle de custo
+Antes de qualquer envio o pipeline conta os tokens exatos de cada edital (endpoint gratuito) e calcula o **pior caso** da etapa. Se gasto acumulado + pior caso passar do teto (`ORCAMENTO_USD` em `settings.py`), nada é enviado. O gasto real fica em `data/interim/LPG/gastos.csv`.
 
-O texto convertido passou por um processo de sanitização, com:
-
-- Remoção de espaços excessivos  
-- Exclusão de fragmentos soltos sem conexão semântica  
-- Eliminação de marcadores residuais de formatação típicos de PDFs  
-- Remoção de caracteres de controle ASCII (como `[\x00-\x1f\x7f-\x9f]`), que frequentemente comprometem a leitura automatizada  
-
----
-
-### 3. Divisão do texto em blocos interpretáveis
-
-Diante da heterogeneidade dos documentos, não foi possível identificar parágrafos de forma consistente. Assim, cada PDF (considerado como unidade de análise) foi segmentado em:
-
-- Blocos de **800 caracteres** (incluindo espaços)  
-- Sobreposição (*overlap*) de aproximadamente **100 caracteres**
-
-A sobreposição assegura continuidade contextual entre blocos adjacentes, evitando perda de sentido quando informações relevantes se situam na fronteira entre trechos.
-
-Cada bloco foi programado para se encerrar apenas após:
-
-- Um ponto final (`.`)  
-- Um marcador de quebra de linha (`\n`)  
-
-Esse critério preserva a integridade textual dos parágrafos.
-
----
-
-### 4. Filtragem por expressões regulares
-
-Foram utilizadas **expressões regulares (regex)** para identificar padrões textuais relevantes de forma concisa e flexível.
-
-Com base nessa técnica:
-
-- Elaborou-se um [dicionário conceitual](https://github.com/SGE-Subsecretaria-de-Gestao-Estrategica/projeto_acoes_afirmativas/blob/main/src/regex_patterns.py) a partir de palavras-chave associadas às informações de interesse  
-- Definiram-se padrões de busca para localizar conteúdos específicos nos editais  
-
-Esse procedimento permitiu filtrar blocos com precisão, mesmo diante de variações na redação e na estrutura dos documentos.
-
----
-
-### 5. Aplicação de modelo de linguagem de grande porte (LLM)
-
-Os blocos filtrados foram utilizados como *input* para o modelo de linguagem **GPT-4o-mini**, escolhido pelo equilíbrio entre desempenho e custo.
-
-O modelo foi configurado com **temperatura 0**, reduzindo ao mínimo a variação nas respostas. Na prática, isso significa que, diante do mesmo estímulo, o modelo responde sempre da mesma forma, assegurando maior reprodutibilidade e precisão na extração dos dados.
-
----
-
-### 6. Avaliação do fluxo de extração
-
-A acurácia do processo foi avaliada por meio de amostragem em **70 editais** (20% da base total de 351).
-
-Utilizou-se como métrica a **F1 Score**, definida pela combinação de:
-
-- **Precisão (Precision):** proporção de acertos entre as previsões positivas  
-- **Revocação (Recall):** proporção de acertos em relação às ocorrências reais  
-
-O resultado aproximado de **97%** indica alto equilíbrio entre precisão e completude, confirmando a eficácia do modelo, com extração consistente e incidência mínima de erros.
-
+### 6. Avaliação
+Piloto com 10 editais e gabarito manual de cerca de 20% da base (estratificado por ente), com F1 por campo e acurácia da classificação de conformidade.
 
 ## 💻 Como usar
 
-### 1. Clonar o repositório
-
- ```
-git clone https://github.com/seu-usuario/pnab-edital-extractor.git
-cd pnab-edital-extractor
- ```
-
-### 2. Criar ambiente virtual e instalar dependências
- 
- ```
+```
 python -m venv .venv
-source .venv/bin/activate   # Linux/Mac
-.venv\Scripts\activate      # Windows
+.venv\Scriptsctivate          # Windows
 pip install -r requirements.txt
 ```
 
-### 3. Rodar o pipeline de extração
+Crie `src/.env` com `ANTHROPIC_API_KEY=...` e rode, a partir de `src/`:
 
 ```
-python src/main.py data/exemplo_edital.pdf
+python main.py converter      # PDF -> Markdown (local)
+python main.py contar         # tokens e custo estimado (gratuito)
+python main.py piloto 10      # 10 editais, síncrono
+python main.py amostra 77     # sorteia a amostra do gabarito
+python main.py batch amostra  # extrai a amostra do gabarito
+python main.py coletar        # coleta batches terminados
+python main.py batch          # extrai todos os pendentes
+python main.py consolidar     # gera data/final/lpg_editais.xlsx
+python main.py gasto          # gasto acumulado
 ```
 
+Testes das regras: `pytest tests`.
 
 ## 🧮 Cálculo e agregação dos dados
 
@@ -172,7 +84,7 @@ $$
 \text{vagas-total-edital} \times \text{p-cota-edital} = \text{vagas-cota-edital}
 $$
 
-**1.1.2** Quando o resultado foi um número fracionário, aplicou-se a regra prevista no art. 6º, § 2º, da IN MinC nº 10/2023, adotando-se arredondamento para o número inteiro imediatamente superior em frações iguais ou superiores a 0,5 e para o inteiro imediatamente inferior em frações menores que 0,5. 
+**1.1.2** Quando o resultado foi um número fracionário, aplicou-se a regra prevista no art. 5º, § 2º, da IN MinC nº 5/2023, adotando-se arredondamento para o número inteiro imediatamente superior em frações iguais ou superiores a 0,5 e para o inteiro imediatamente inferior em frações menores que 0,5. 
 
 **1.1.3** Nos casos de editais específicos integralmente destinados a um dos três grupos prioritários (pessoas negras, pessoas indígenas e PCD), a totalidade das vagas foi contabilizada na respectiva categoria de cota. 
 
@@ -242,7 +154,7 @@ $$
 A análise considerou, de forma agregada, os percentuais de vagas e de recursos previstos nos editais de cada ente. A identificação de índices ligeiramente inferiores ao mínimo normativo não implica, por si só, descumprimento das regras de cotas. Essas variações podem decorrer de fatores técnicos, como: 
 
 - **Uso de editais específicos**: a publicação de editais exclusivos para determinados grupos prioritários pode alterar a proporção de reservas quando se observa o conjunto dos editais. Nesses casos, a ação afirmativa se dá por meio de instrumentos focalizados, sem que haja descumprimento das diretrizes no resultado global.
-- **Regras de arredondamento**: a conversão de frações em números inteiros pode produzir percentuais levemente inferiores ao parâmetro previsto. Trata-se, muitas vezes, de efeito da aplicação correta da regra de arredondamento estabelecida no art. 6º, § 2º, da IN MinC nº 10/2023, sem indicar necessariamente descumprimento da reserva.
+- **Regras de arredondamento**: a conversão de frações em números inteiros pode produzir percentuais levemente inferiores ao parâmetro previsto. Trata-se, muitas vezes, de efeito da aplicação correta da regra de arredondamento estabelecida no art. 5º, § 2º, da IN MinC nº 5/2023, sem indicar necessariamente descumprimento da reserva.
 
 
 ## 📈 Análise e consolidação de dados 

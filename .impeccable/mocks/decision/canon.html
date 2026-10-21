@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden}
+body{font-family:Raleway,system-ui,sans-serif;background:#F8F8F8;color:#1B1B1B;font-size:14px}
+header{height:64px;background:#fff;border-bottom:1px solid #E0E0E0;display:flex;align-items:center;padding:0 40px;gap:24px}
+.brand{font-weight:800;font-size:18px;color:#1351B4}
+.brand small{display:block;font-weight:500;font-size:12px;color:#555}
+nav{display:flex;gap:28px;margin-left:48px}
+nav a{color:#333;text-decoration:none;font-weight:600;font-size:14px;padding:22px 0;border-bottom:3px solid transparent}
+nav a.on{color:#1351B4;border-color:#1351B4}
+.sp{flex:1}
+.btn{border:1px solid #1351B4;color:#1351B4;border-radius:100px;padding:8px 20px;font-weight:600;font-size:13px;background:#fff}
+.btn.p{background:#1351B4;color:#fff}
+main{padding:24px 40px}
+.top{display:flex;align-items:flex-end;gap:16px;margin-bottom:20px}
+h1{font-size:24px;font-weight:700}
+.sub{color:#555;font-size:13px;margin-top:4px}
+.f{display:flex;gap:12px;margin-left:auto}
+.sel{background:#fff;border:1px solid #888;border-radius:6px;padding:8px 32px 8px 12px;font-size:13px;min-width:160px;position:relative}
+.sel::after{content:"";position:absolute;right:12px;top:13px;border:5px solid transparent;border-top-color:#1351B4}
+.sel b{display:block;font-size:11px;color:#555;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.k{background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.12);padding:18px 20px;border-top:4px solid #1351B4}
+.k.ok{border-color:#168821}.k.no{border-color:#E52207}.k.na{border-color:#FFCD07}
+.k .l{font-size:13px;color:#555;font-weight:600}
+.k .v{font-size:34px;font-weight:800;margin:6px 0 2px}
+.k .d{font-size:12px;color:#555}
+.row{display:grid;grid-template-columns:1.05fr 1fr;gap:16px;margin-bottom:20px}
+.card{background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.12);padding:18px 20px}
+.card h2{font-size:16px;font-weight:700;margin-bottom:4px}
+.card .c{font-size:12px;color:#555;margin-bottom:14px}
+.grp{display:grid;grid-template-columns:110px 1fr 60px;align-items:center;gap:12px;margin-bottom:14px}
+.grp .n{font-weight:700}
+.stack{display:flex;height:28px;border-radius:4px;overflow:hidden}
+.stack i{display:block}
+.g{background:#168821}.r{background:#E52207}.y{background:#FFCD07}.b{background:#9E9E9E}
+.leg{display:flex;gap:18px;font-size:12px;color:#444;margin-top:6px}
+.leg span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.bars .br{display:grid;grid-template-columns:150px 1fr 44px;gap:10px;align-items:center;font-size:12px;margin-bottom:7px}
+.bars .t{height:12px;background:#EDEDED;border-radius:2px;overflow:hidden}
+.bars .t i{display:block;height:100%;background:#1351B4}
+.bars .br em{font-style:normal;font-weight:700;text-align:right}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-weight:700;color:#333;padding:10px 12px;border-bottom:2px solid #1351B4;background:#fff;font-size:12px}
+td{padding:10px 12px;border-bottom:1px solid #E6E6E6;background:#fff}
+.tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700}
+.tag.ok{background:#E3F5E1;color:#0F5E17}.tag.no{background:#FDE0DB;color:#A01A05}.tag.na{background:#FFF5C2;color:#6B5600}
+.search{background:#fff;border:1px solid #888;border-radius:6px;padding:8px 12px;width:280px;font-size:13px;color:#777}
+.th{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+</style></head><body>
+<header>
+  <div class="brand">Painel LPG · Cotas IN 5<small>Ministério da Cultura · Lei Paulo Gustavo</small></div>
+  <nav><a class="on" href="#">Visão geral</a><a href="#">Estados/DF</a><a href="#">Capitais</a><a href="#">Editais</a><a href="#">Metodologia</a></nav>
+  <div class="sp"></div>
+  <span class="btn">Exportar XLSX</span><span class="btn p">Ajuda</span>
+</header>
+<main>
+  <div class="top">
+    <div><h1>Conformidade com a IN MinC nº 5/2023</h1><div class="sub">Art. 5º: mínimo de 20% das vagas para pessoas negras e 10% para pessoas indígenas · 385 editais de 50 entes</div></div>
+    <div class="f">
+      <div class="sel"><b>Tipo de ente</b>Todos</div>
+      <div class="sel"><b>Ente</b>Todos os entes</div>
+      <div class="sel"><b>Modalidade</b>Todas</div>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="k"><div class="l">Editais analisados</div><div class="v">385</div><div class="d">277 estaduais · 108 de capitais</div></div>
+    <div class="k ok"><div class="l">Conformes</div><div class="v">268</div><div class="d">69,6% dos editais</div></div>
+    <div class="k no"><div class="l">Não conformes</div><div class="v">82</div><div class="d">21,3% · principal motivo: sem cota para o grupo</div></div>
+    <div class="k na"><div class="l">Específicos ou indeterminados</div><div class="v">33</div><div class="d">18 específicos · 15 indeterminados</div></div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <h2>Status dos editais por tipo de ente</h2><div class="c">Proporção de editais em cada classificação</div>
+      <div class="grp"><span class="n">Estados/DF</span><div class="stack"><i class="g" style="width:69.7%"></i><i class="r" style="width:21.7%"></i><i class="y" style="width:6%"></i><i class="b" style="width:2.6%"></i></div><span>277</span></div>
+      <div class="grp"><span class="n">Capitais</span><div class="stack"><i class="g" style="width:69.4%"></i><i class="r" style="width:20.4%"></i><i class="y" style="width:1.9%"></i><i class="b" style="width:8.3%"></i></div><span>108</span></div>
+      <div class="leg"><span style="--c:#168821">Conforme</span><span style="--c:#E52207">Não conforme</span><span style="--c:#FFCD07">Específico</span><span style="--c:#9E9E9E">Indeterminado</span></div>
+    </div>
+    <div class="card bars">
+      <h2>Editais conformes por ente (Estados/DF)</h2><div class="c">% de editais conformes · 5 maiores bases</div>
+      <div class="br">Pará (28)<div class="t"><i style="width:89%"></i></div><em>89%</em></div>
+      <div class="br">Alagoas (27)<div class="t"><i style="width:78%"></i></div><em>78%</em></div>
+      <div class="br">São Paulo (24)<div class="t"><i style="width:100%"></i></div><em>100%</em></div>
+      <div class="br">Espírito Santo (22)<div class="t"><i style="width:68%"></i></div><em>68%</em></div>
+      <div class="br">Goiás (21)<div class="t"><i style="width:90%"></i></div><em>90%</em></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="th"><h2>Editais</h2><span class="search">Buscar por ente, objeto ou arquivo…</span></div>
+    <table>
+      <tr><th>Ente</th><th>Tipo</th><th>Arquivo</th><th>Modalidade</th><th>Vagas</th><th>% negras</th><th>% indígenas</th><th>Status IN 5</th></tr>
+      <tr><td>Aracaju</td><td>Capital</td><td>2023-08_CAP-ARACAJU_LPG.pdf</td><td>Fomento</td><td>22</td><td>20%</td><td>10%</td><td><span class="tag ok">Conforme</span></td></tr>
+      <tr><td>Paraíba</td><td>Estado</td><td>2023-03_EST-PARAIBA_LPG.pdf</td><td>Prêmio</td><td>40</td><td>—</td><td>—</td><td><span class="tag no">Não conforme</span></td></tr>
+      <tr><td>Amazonas</td><td>Estado</td><td>2023-05_EST-AMAZONAS_LPG.pdf</td><td>Fomento</td><td>15</td><td>100%</td><td>—</td><td><span class="tag na">Específico</span></td></tr>
+    </table>
+  </div>
+</main>
+</body></html>

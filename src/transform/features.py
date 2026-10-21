@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from unicodedata import normalize
 from config import settings
+from transform.conformidade import arredonda_in5
 
 def resolve_cod_ibge(ente):
     if ente in settings.MAP_CAPITAIS_IBGE:
@@ -17,7 +18,7 @@ def calcula_cotas_vagas_e_valores(
     df: pd.DataFrame,
     col_valor_total: str = 'valor_total',
     col_vagas_totais: str = 'vagas_totais',
-    type_round: str = 'ceil'
+    type_round: str = 'in5'
 ) -> pd.DataFrame:
 
     cotas = {
@@ -27,7 +28,14 @@ def calcula_cotas_vagas_e_valores(
     }
 
     # calcula vagas
-    if type_round == 'ceil':
+    if type_round == 'in5':  # IN MinC nº 5/2023, art. 5º, §2º (meio para cima)
+        for grupo, col_perc in cotas.items():
+            df[f'vagas_cotas_{grupo}'] = (
+                (df[col_perc] * df[col_vagas_totais])
+                .apply(lambda x: arredonda_in5(x) if pd.notna(x) else pd.NA)
+                .astype('Int64')
+            )
+    elif type_round == 'ceil':
         for grupo, col_perc in cotas.items():
             df[f'vagas_cotas_{grupo}'] = (
                 np.ceil(df[col_perc] * df[col_vagas_totais])
@@ -73,11 +81,8 @@ def calcula_valor_cotas_sem_vagas(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def cria_flags_cotas(df: pd.DataFrame) -> pd.DataFrame:
-    regras = {
-        'negras': ('perc_cotas_negras', 0.25),
-        'indigenas': ('perc_cotas_indigenas', 0.10),
-        'pcd': ('perc_cotas_pcd', 0.05),
-    }
+    # LPG (IN MinC nº 5/2023): só negras e indígenas são obrigatórias
+    regras = {g: (f'perc_cotas_{g}', limite) for g, limite in settings.COTA_MIN.items()}
 
     for grupo, (col, limite) in regras.items():
         df[f'flag_cotas_{grupo}'] = df[col] >= limite

@@ -20,6 +20,37 @@ CAPITAL_PDF_ROOT: str = Path(PDF_ROOT / 'CAPITAL')
 ESTADO_PDF_ROOT: str = Path(PDF_ROOT / 'ESTADO')
 
 
+# LPG - LEI PAULO GUSTAVO
+LPG_PDF_ROOT = DATA_PATH / 'EDITAIS'            # data/EDITAIS/{Capitais,Estados}/<ente>/*.pdf
+LPG_PASTAS_IGNORADAS = {'outros editais', 'PlanilhasPC'}
+LPG_INTERIM = INTERIM_DATA_PATH / 'LPG'
+LPG_MD_ROOT = LPG_INTERIM / 'MD'                # editais convertidos para Markdown
+LPG_PDF_COMPRIMIDO = LPG_INTERIM / 'PDF_ESCANEADO'  # escaneados recomprimidos para envio
+LPG_MANIFESTO = LPG_INTERIM / 'manifesto.csv'   # 1 linha por edital (ente, arquivo, modo, tokens)
+LPG_LLM_RAW = LPG_INTERIM / 'llm_raw'           # JSON bruto por edital (cache/retomada)
+LPG_GASTOS = LPG_INTERIM / 'gastos.csv'         # gasto real por chamada
+LPG_BATCHES = LPG_INTERIM / 'batches.csv'       # batches enviados
+LPG_OUTPUT = FINAL_DATA_PATH / 'lpg_editais.xlsx'
+
+MIN_CHARS_POR_PAGINA = 200  # abaixo disso o PDF é tratado como escaneado
+
+# MODELO
+MODEL_ID = 'claude-sonnet-5-5'
+EFFORT = 'medium'
+MAX_TOKENS = 8000
+PROMPT_VERSION = 'lpg-v2'  # v1: piloto; v2: retificações completas = edital, PDFs com vários editais
+
+# ORÇAMENTO (US$) - teto rígido somando todas as etapas
+ORCAMENTO_USD = 40.0
+PRECOS_USD_POR_MTOK = {  # preço padrão; o Batch API cobra 50%
+    'claude-sonnet-5-5': {'input': 2.00, 'output': 10.00},
+}
+MULT_CACHE = {'escrita': 1.25, 'leitura': 0.10}  # sobre o preço de input
+DESCONTO_BATCH = 0.5
+
+# IN MinC nº 5/2023, art. 5º
+COTA_MIN = {'negras': 0.20, 'indigenas': 0.10}
+
 # CONTROLE CONVERSAO
 LOG_PATH = Path(INTERIM_DATA_PATH/'controle_conversao.csv')
 
@@ -106,7 +137,7 @@ MAP_CAPITAIS_IBGE = {
     "SAO PAULO (CAPITAL)": "3550308",
     "TERESINA": "2211001",
     "VITORIA": "3205309",
-    "RIO DE JANEIRO (CAPITAL)":"2111300"
+    "RIO DE JANEIRO (CAPITAL)": "3304557"
 }
 
 

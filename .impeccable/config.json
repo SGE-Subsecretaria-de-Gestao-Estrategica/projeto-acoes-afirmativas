@@ -1,0 +1,12 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [
+      ".impeccable/mocks/decision/canon.html",
+      ".impeccable/mocks/decision/assigned.html",
+      ".impeccable/mocks/decision/challenger-centrerail.html",
+      ".impeccable/mocks/decision/model-pick.html"
+    ],
+    "ignoreValues": []
+  }
+}

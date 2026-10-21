@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Trilho Central</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--ink:#1A1A1A;--red:#C23B22;--mute:#66665F;--rule:#D9D9D3}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden;background:var(--bg);color:var(--ink);font:13px/1.4 Archivo,sans-serif}
+header{height:64px;display:flex;align-items:center;gap:24px;padding:0 40px;border-bottom:1px solid var(--ink)}
+header h1{font:600 18px "Source Serif 4",serif}
+header .sub{color:var(--mute)}
+.f{margin-left:auto;display:flex;gap:10px}
+.f label{display:flex;flex-direction:column;font-size:12px;color:var(--mute);gap:2px}
+.f select,.f input{font:13px Archivo;padding:5px 8px;border:1px solid var(--rule);background:#fff;color:var(--ink);border-radius:2px;min-width:150px}
+.sum{height:72px;display:grid;grid-template-columns:1fr 72px 1fr;border-bottom:1px solid var(--rule)}
+.sum .s{display:flex;align-items:center;gap:28px;padding:0 40px}
+.sum .s.l{justify-content:flex-end;text-align:right}
+.sum h2{font:600 15px "Source Serif 4",serif}
+.k b{display:block;font:600 22px Archivo;font-variant-numeric:tabular-nums}
+.k span{font-size:12px;color:var(--mute)}
+.k.r b{color:var(--red)}
+.sum .rail{border-left:1px solid var(--ink);border-right:1px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:12px;letter-spacing:.08em;color:var(--mute)}
+.legend{height:34px;display:flex;gap:20px;justify-content:center;align-items:center;font-size:12px;color:var(--mute);border-bottom:1px solid var(--rule)}
+.legend i{display:inline-block;width:14px;height:8px;margin-right:6px;vertical-align:middle}
+.row{display:grid;grid-template-columns:1fr 72px 1fr;height:52px;border-bottom:1px solid var(--rule)}
+.cell{display:grid;align-items:center;padding:0 40px;gap:16px}
+.l{grid-template-columns:auto 1fr 280px;text-align:right}
+.r{grid-template-columns:280px 1fr auto}
+.name{font:400 15px "Source Serif 4",serif}
+.n{font-variant-numeric:tabular-nums;color:var(--mute);font-size:12px;white-space:nowrap}
+.n b{color:var(--ink);font-weight:600}
+.bar{display:flex;height:12px;gap:2px}
+.l .bar{flex-direction:row-reverse}
+.bar span{display:block}
+.c{background:var(--ink)}
+.e{background:repeating-linear-gradient(45deg,var(--ink) 0 2px,transparent 2px 4px)}
+.i{border:1px solid var(--mute)}
+.x{background:var(--red)}
+.uf{border-left:1px solid var(--ink);border-right:1px solid var(--ink);display:flex;align-items:center;justify-content:center;font:600 12px Archivo;letter-spacing:.1em}
+.row:hover{background:#F0F0EC}
+.empty{color:var(--mute);font-size:12px;font-style:italic;border:1px dashed var(--rule);padding:6px 10px;text-align:center}
+.mark{color:var(--red);font-weight:600}
+</style></head><body>
+<header>
+  <h1>Ações afirmativas na LPG</h1><span class="sub">Conformidade com a IN MinC nº 5/2023 · 385 editais · 48 entes</span>
+  <div class="f">
+    <label>Situação<select><option>Todas</option></select></label>
+    <label>Modalidade<select><option>Todas</option></select></label>
+    <label>Grupo<select><option>Negros e indígenas</option></select></label>
+    <label>Buscar ente<input placeholder="Nome do ente"></label>
+  </div>
+</header>
+<div class="sum">
+  <div class="s l"><div class="k r"><b>17</b><span>com edital não conforme</span></div><div class="k"><b>277</b><span>editais</span></div><h2>Estados e DF · 25</h2></div>
+  <div class="rail">UF</div>
+  <div class="s"><h2>Capitais · 25</h2><div class="k"><b>108</b><span>editais</span></div><div class="k r"><b>13</b><span>com edital não conforme</span></div></div>
+</div>
+<div class="legend"><span><i class="c"></i>conforme</span><span><i class="e"></i>específico</span><span><i class="i"></i>indeterminado</span><span><i class="x"></i>não conforme</span><span>· cada segmento = 1 edital</span></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>2</b>/4 conformes · <span class="mark">1</span></span><div class="bar"><span class="c" style="flex:2"></span><span class="e" style="flex:1"></span><span class="x" style="flex:1"></span></div><span class="name">Acre</span></div><div class="uf">AC</div><div class="cell r"><span class="name">Rio Branco</span><div class="bar"><span class="c" style="flex:5"></span><span class="i" style="flex:2"></span></div><span class="n"><b>5</b>/7 conformes</span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>21</b>/27 conformes · <span class="mark">3</span></span><div class="bar"><span class="c" style="flex:21"></span><span class="e" style="flex:3"></span><span class="x" style="flex:3"></span></div><span class="name">Alagoas</span></div><div class="uf">AL</div><div class="cell r"><span class="name">Maceió</span><div class="bar"><span class="c" style="flex:2"></span></div><span class="n"><b>2</b>/2 conformes</span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>2</b>/2 conformes</span><div class="bar"><span class="c" style="flex:2"></span></div><span class="name">Amapá</span></div><div class="uf">AP</div><div class="cell r"><span class="name">Macapá</span><div class="bar"><span class="c" style="flex:2"></span></div><span class="n"><b>2</b>/2 conformes</span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>3</b>/11 conformes · <span class="mark">1</span></span><div class="bar"><span class="c" style="flex:3"></span><span class="e" style="flex:4"></span><span class="i" style="flex:3"></span><span class="x" style="flex:1"></span></div><span class="name">Amazonas</span></div><div class="uf">AM</div><div class="cell r"><span class="name">Manaus</span><div class="empty">sem editais na base</div><span class="n">—</span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>2</b>/3 conformes · <span class="mark">1</span></span><div class="bar"><span class="c" style="flex:2"></span><span class="x" style="flex:1"></span></div><span class="name">Bahia</span></div><div class="uf">BA</div><div class="cell r"><span class="name">Salvador</span><div class="bar"><span class="c" style="flex:1"></span><span class="i" style="flex:1"></span><span class="x" style="flex:2"></span></div><span class="n"><b>1</b>/4 conformes · <span class="mark">2</span></span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>2</b>/14 conformes · <span class="mark">10</span></span><div class="bar"><span class="c" style="flex:2"></span><span class="e" style="flex:1"></span><span class="i" style="flex:1"></span><span class="x" style="flex:10"></span></div><span class="name">Ceará</span></div><div class="uf">CE</div><div class="cell r"><span class="name">Fortaleza</span><div class="bar"><span class="c" style="flex:1"></span><span class="e" style="flex:1"></span><span class="x" style="flex:2"></span></div><span class="n"><b>1</b>/4 conformes · <span class="mark">2</span></span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>1</b>/3 conformes · <span class="mark">2</span></span><div class="bar"><span class="c" style="flex:1"></span><span class="x" style="flex:2"></span></div><span class="name">Distrito Federal</span></div><div class="uf">DF</div><div class="cell r"><span class="name">—</span><div class="empty">DF não tem capital separada</div><span class="n"></span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>15</b>/22 conformes · <span class="mark">6</span></span><div class="bar"><span class="c" style="flex:15"></span><span class="i" style="flex:1"></span><span class="x" style="flex:6"></span></div><span class="name">Espírito Santo</span></div><div class="uf">ES</div><div class="cell r"><span class="name">Vitória</span><div class="bar"><span class="c" style="flex:2"></span></div><span class="n"><b>2</b>/2 conformes</span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>19</b>/21 conformes</span><div class="bar"><span class="c" style="flex:19"></span><span class="e" style="flex:2"></span></div><span class="name">Goiás</span></div><div class="uf">GO</div><div class="cell r"><span class="name">Goiânia</span><div class="bar"><span class="c" style="flex:4"></span></div><span class="n"><b>4</b>/4 conformes</span></div></div>
+
+<div class="row"><div class="cell l"><span class="n">—</span><div class="empty">sem editais na base</div><span class="name">Maranhão</span></div><div class="uf">MA</div><div class="cell r"><span class="name">São Luís</span><div class="bar"><span class="c" style="flex:1"></span><span class="x" style="flex:1"></span></div><span class="n"><b>1</b>/2 conformes · <span class="mark">1</span></span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>3</b>/12 conformes · <span class="mark">9</span></span><div class="bar"><span class="c" style="flex:3"></span><span class="x" style="flex:9"></span></div><span class="name">Mato Grosso</span></div><div class="uf">MT</div><div class="cell r"><span class="name">Cuiabá</span><div class="bar"><span class="i" style="flex:1"></span><span class="x" style="flex:2"></span></div><span class="n"><b>0</b>/3 conformes · <span class="mark">2</span></span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>4</b>/4 conformes</span><div class="bar"><span class="c" style="flex:4"></span></div><span class="name">Mato Grosso do Sul</span></div><div class="uf">MS</div><div class="cell r"><span class="name">Campo Grande</span><div class="bar"><span class="c" style="flex:4"></span></div><span class="n"><b>4</b>/4 conformes</span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>8</b>/10 conformes · <span class="mark">2</span></span><div class="bar"><span class="c" style="flex:8"></span><span class="x" style="flex:2"></span></div><span class="name">Minas Gerais</span></div><div class="uf">MG</div><div class="cell r"><span class="name">Belo Horizonte</span><div class="bar"><span class="c" style="flex:3"></span></div><span class="n"><b>3</b>/3 conformes</span></div></div>
+
+<div class="row"><div class="cell l"><span class="n"><b>25</b>/28 conformes · <span class="mark">2</span></span><div class="bar"><span class="c" style="flex:25"></span><span class="e" style="flex:1"></span><span class="x" style="flex:2"></span></div><span class="name">Pará</span></div><div class="uf">PA</div><div class="cell r"><span class="name">Belém</span><div class="bar"><span class="c" style="flex:6"></span></div><span class="n"><b>6</b>/6 conformes</span></div></div>
+</body></html>

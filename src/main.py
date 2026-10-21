@@ -1,138 +1,89 @@
-# Imports
-from llm_config import (
-    pdf_parser, 
-    chunknizer, 
-    get_chunk_ids,
-    call_gpt_4o_mini
-)
-import  regex_patterns
-import  os, re
-import  pandas as pd
-import  pickle
+"""Pipeline LPG: verificação de cotas da IN MinC nº 5/2023 nos editais de estados e capitais.
 
-# Contanates
-INPUT_PATH_ESTADOS = r"C:\Users\Gabriel\Documents\GitHub\editai_extractor_llm_based\data\input\editais_estados"
-INPUT_PATH_CAPITAIS = "/Users/gabrielribeirobizerril/Documents/GitHub/llm/editai_extractor_llm_based/data/input/capitais"
-# Carregamento dos dados
-def load_data(input_files: str) -> pd.DataFrame:
-    INPUT_PATH = input_files
-    l = []
-    entes = [nome for nome in os.listdir(INPUT_PATH) if os.path.isdir(os.path.join(INPUT_PATH, nome))]
-    for ente in entes:
-        pasta = INPUT_PATH + f"/{ente}"
-        d     = {
-            "ente"       : ente, 
-            "path_files" : [pasta + f"/{f}" for f in os.listdir(pasta) if f.endswith('.pdf')],
-            "files"      : [f for f in os.listdir(pasta) if f.endswith('.pdf')]
+Etapas (rodar a partir da pasta src/):
+    python main.py converter            # PDF -> Markdown / PDF comprimido + manifesto (local, sem custo)
+    python main.py contar               # conta tokens exatos de cada edital (gratuito) e estima o custo
+    python main.py piloto 10            # extração síncrona de N editais variados (preço cheio)
+    python main.py amostra 77           # sorteia a amostra do gabarito, estratificada por ente
+    python main.py batch [amostra]      # envia o batch (todos os pendentes, ou só a amostra)
+    python main.py coletar              # coleta os batches terminados (pode repetir)
+    python main.py consolidar           # aplica as regras da IN e gera data/final/lpg_editais.xlsx
+    python main.py gasto                # mostra o gasto acumulado
+    python main.py painel               # abre o painel de conformidade em http://127.0.0.1:8050
+    python main.py relatorio            # gera relatorios/relatorio_exploratorio_lpg.html
+    python main.py revisao              # gera a planilha do gabarito manual (amostra)
+    python main.py f1                   # calcula o F1 a partir da planilha revisada
 
-        }
-        l.append(d)
+Todas as etapas que chamam a API passam pela trava de orçamento (settings.ORCAMENTO_USD).
+"""
+import sys
 
-    return pd.DataFrame(l)
+import pandas as pd
 
-df_load_data = load_data(input_files=INPUT_PATH_CAPITAIS)
+import avaliacao
+from config import settings
+from extract.pdf_to_md import converter_editais
+from llm import budget, extractor
+from transform.consolida_lpg import consolidar, salva_excel
+
+AMOSTRA = settings.LPG_INTERIM / "amostra_gabarito.csv"
 
 
-l_documents = []
-l_dict      = []
-for idx, row in df_load_data.iterrows():
-    ente = row["ente"]
-    for idx, path in enumerate(row["path_files"]):
-        id_doc      = row["files"][idx]
-        texto       = pdf_parser(path)
-        chunks      = chunknizer(text=texto)
-        documents   = get_chunk_ids(chunks=chunks, edital_id=id_doc, uf_edital=ente)
-        l_documents.append(documents)
-        d = {
-            "uf": ente,
-            "path_pdf": path,
-            "pdf": id_doc,
-            "document": documents
-        }
-        l_dict.append(d)
+def escolhe_piloto(n: int) -> list[str]:
+    """Editais variados: escaneados, os maiores, os menores e o resto espalhado entre entes."""
+    df = extractor.carrega_manifesto().sort_values("tokens_entrada")
+    escolhidos = list(df[df["modo"] == "pdf"].drop_duplicates("ente").head(2)["id"])
+    texto = df[df["modo"] == "texto"]
+    escolhidos += list(texto.tail(2)["id"]) + list(texto.head(1)["id"])
+    resto = texto[~texto["id"].isin(escolhidos)].drop_duplicates("ente").sample(frac=1, random_state=42)
+    escolhidos += list(resto["id"])
+    return escolhidos[:n]
 
-# Salva os arquivos já pré-processados
-with open("./../data/output/capitais/l_documents_capitais_versao_clean.pkl", "wb") as f:
-    pickle.dump(l_documents, f)
-    
-with open("./../data/output/capitais/l_dict_capitais_versao_clean.pkl", "wb") as f:
-    pickle.dump(l_dict, f)
 
-df_dict = pd.DataFrame(l_dict)
-df_dict.to_csv("l_dict_capitais_versao_clean.csv")
-
-#  Filtra chunks relevantes
-def limpa_texto(texto: str) -> str:
-    # Remove caracteres de controle ilegais (exceto \n, \r, \t se desejar)
-    texto = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F]', ' ', texto)
-    # Remove múltiplos espaços
-    texto = re.sub(r'\s+', ' ', texto).strip()
-    return texto
-
-def filtra_chunks(documents: list):
-    regex_valor_total       = regex_patterns.regex_extrair_valor()
-    regex_vagas_total       = regex_patterns.regex_extrair_vagas()
-    regex_porcentagem       = regex_patterns.regex_verificar_porcentagem()
-
-    # Filtragem com regex
-    chunks_valor_total = [doc for doc in documents if regex_valor_total.search(doc.page_content)]
-    chunks_vagas_total = [doc for doc in documents if regex_vagas_total.search(doc.page_content)]
-    chunks_porcentagem = [doc for doc in documents if regex_porcentagem.search(doc.page_content)]
-
-    # União sem duplicatas
-    chunks_y = list({doc.metadata['id']: doc for doc in (chunks_valor_total + chunks_vagas_total + chunks_porcentagem)}.values())
-
-    # Limpeza dos caracteres indesejados no conteúdo
-    for doc in chunks_y:
-        doc.page_content = limpa_texto(doc.page_content)
-
-    return chunks_y
-
-def aplicar_filtragem(df):
-    df = df.copy()
-
-    # Aplica a função que filtra os chunks
-    df["chunks_relevantes"] = df["document"].apply(filtra_chunks)
-
-    # Junta os textos dos chunks filtrados
-    df["texto_completo"] = df["chunks_relevantes"].apply(
-        lambda chunks: "\n\n".join(doc.page_content for doc in chunks)
+def sorteia_amostra(n: int) -> None:
+    df = extractor.carrega_manifesto()
+    frac = n / len(df)
+    amostra = pd.concat(
+        g.sample(max(1, round(len(g) * frac)), random_state=42) for _, g in df.groupby("ente")
     )
-
-    return df
-
-df_filtrado = aplicar_filtragem(df_dict)
-
-
-df_filtrado.to_csv("df_filtrado_capitais_clean.csv")
-
-# Roda o modelo de linguagem
-df_filtrado["resultado_llm"] = df_filtrado["texto_completo"].apply(call_gpt_4o_mini)
-
-# Salva o resultados
-df_filtrado.to_csv("df_filtrado_full_capitais_clean.csv")
-df_filtrado.to_pickle("df_filtrado_full_capitais_clean.pkl")
+    amostra = amostra.sample(min(n, len(amostra)), random_state=42)
+    amostra[["id", "tipo_ente", "ente", "arquivo", "pdf_path"]].to_csv(AMOSTRA, sep=";", index=False)
+    print(f"Amostra de {len(amostra)} editais em {AMOSTRA}")
 
 
-# Função que remove caracteres não permitidos
-def remove_illegal_chars(val):
-    if isinstance(val, str):
-        return re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F]', '', val)
-    return val
+def main(args: list[str]) -> None:
+    etapa = args[0] if args else ""
+    if etapa == "converter":
+        converter_editais()
+    elif etapa == "contar":
+        extractor.resumo_custo(extractor.conta_tokens())
+    elif etapa == "piloto":
+        extractor.extrai_sincrono(escolhe_piloto(int(args[1]) if len(args) > 1 else 10))
+    elif etapa == "amostra":
+        sorteia_amostra(int(args[1]) if len(args) > 1 else 77)
+    elif etapa == "batch":
+        ids = list(pd.read_csv(AMOSTRA, sep=";", dtype=str)["id"]) if args[1:] == ["amostra"] else None
+        extractor.envia_batch(ids, etapa="gabarito" if ids else "batch")
+    elif etapa == "coletar":
+        extractor.coleta_batches()
+    elif etapa == "consolidar":
+        salva_excel(consolidar(extractor.carrega_manifesto()))
+    elif etapa == "gasto":
+        print(f"Gasto acumulado: US$ {budget.gasto_acumulado():.2f} de US$ {settings.ORCAMENTO_USD:.2f} "
+              f"(reservado em batches abertos: US$ {budget.reservado_em_batches_abertos():.2f})")
+    elif etapa == "revisao":
+        avaliacao.gera_planilha_revisao()
+    elif etapa == "f1":
+        avaliacao.calcula_f1()
+    elif etapa == "relatorio":
+        from relatorio_exploratorio import gera
+        print(f"Relatório gerado em {gera()}")
+    elif etapa == "painel":
+        from dashboard.app import app
+        app.run(debug=False)
+    else:
+        print(__doc__)
 
-# Transforma o resultado em DataFrame
-df_expanded_llm = df_filtrado['resultado_llm'].apply(pd.Series)
 
-
-df_cleaned = df_filtrado.drop(columns=['resultado_llm'])
-
-# Em seguida, concatene o DataFrame limpo com as colunas expandidas
-df_final = pd.concat([df_cleaned, df_expanded_llm], axis=1)
-
-
-
-# Aplica a função em todo o DataFrame
-df_limpo = df_final.applymap(remove_illegal_chars)
-
-# Exporta para Excel
-df_limpo.to_excel("output_capitai_pt2.xlsx", index=False)
+if __name__ == "__main__":
+    main(sys.argv[1:])

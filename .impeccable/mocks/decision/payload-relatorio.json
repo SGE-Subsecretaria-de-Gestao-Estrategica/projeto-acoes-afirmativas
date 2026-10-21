@@ -1,0 +1,61 @@
+{
+  "title": "Estrutura do relatório exploratório",
+  "question": "O visual segue o painel (DESIGN.md). Escolha como o relatório se organiza.",
+  "options": [
+    {
+      "id": "perguntas",
+      "label": "Perguntas e respostas",
+      "kicker": "THE ROLL",
+      "lineage": "nota técnica em perguntas: cada seção é uma pergunta que a equipe faz à base",
+      "thesis": "Cada seção abre com a pergunta e a resposta em uma frase, depois o gráfico e a tabela que a provam.",
+      "palette": ["#FFFFFF", "#16191D", "#1F5F45", "#9E3A2B", "#C48A2A"],
+      "materials": ["sumário lateral de perguntas", "resposta em destaque", "remissão § nas conclusões"],
+      "viewport": "Faixa verde com título e base; sumário de 8 perguntas à esquerda; coluna de leitura abre com 'Quantos editais cumprem a IN 5?' e a resposta '7 em cada 10' antes da barra de situação.",
+      "risk": "Perguntas demais viram FAQ; precisa limitar a 7–8 e manter os achados mais fortes no topo.",
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "faixa título + base", "x": 0, "y": 0, "w": 12, "h": 2, "accent": true},
+        {"label": "sumário de perguntas", "x": 0, "y": 2, "w": 3, "h": 8},
+        {"label": "pergunta + resposta", "x": 3, "y": 2, "w": 7, "h": 2},
+        {"label": "gráfico de prova", "x": 3, "y": 4, "w": 7, "h": 4},
+        {"label": "nota de método", "x": 10, "y": 2, "w": 2, "h": 6},
+        {"label": "próxima pergunta", "x": 3, "y": 8, "w": 7, "h": 2}
+      ]}
+    },
+    {
+      "id": "achados",
+      "label": "Nota técnica de achados",
+      "lineage": "relatório de auditoria: achados numerados, evidência, limitação",
+      "thesis": "Dez achados numerados em ordem de importância, cada um com evidência quantitativa e o limite do que a base permite afirmar.",
+      "palette": ["#FFFFFF", "#16191D", "#1F5F45", "#9E3A2B", "#3E6E8E"],
+      "materials": ["parágrafos numerados", "quadro-resumo no topo", "caixa de limitação por achado"],
+      "viewport": "Cabeçalho com sumário executivo de cinco linhas e quadro de números-chave; achado 1 abaixo: '82 editais não conformes concentram R$ 395 mi', gráfico ao lado.",
+      "risk": "Lê como documento formal; menos convidativo para exploração livre.",
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "cabeçalho", "x": 0, "y": 0, "w": 12, "h": 1, "accent": true},
+        {"label": "sumário executivo", "x": 0, "y": 1, "w": 8, "h": 3},
+        {"label": "números-chave", "x": 8, "y": 1, "w": 4, "h": 3},
+        {"label": "achado 1 texto", "x": 0, "y": 4, "w": 6, "h": 3},
+        {"label": "achado 1 gráfico", "x": 6, "y": 4, "w": 6, "h": 3},
+        {"label": "achado 2", "x": 0, "y": 7, "w": 12, "h": 3}
+      ]}
+    },
+    {
+      "id": "atlas",
+      "label": "Atlas de entes",
+      "lineage": "anuário estatístico: capítulos curtos e uma prancha de pequenos múltiplos",
+      "thesis": "Poucos capítulos de visão geral levam a uma prancha com os 50 entes lado a lado, cada um com sua barra de editais e percentuais.",
+      "palette": ["#FFFFFF", "#16191D", "#1F5F45", "#9E3A2B", "#C48A2A"],
+      "materials": ["pequenos múltiplos por ente", "capítulos numerados", "legenda única"],
+      "viewport": "Título e três números de abertura; logo abaixo, a prancha Estados/DF | Capitais em grade de pequenos múltiplos, com os capítulos analíticos depois.",
+      "risk": "A prancha repete o painel; os insights ficam mais abaixo na página.",
+      "wireframe": {"cols": 12, "rows": 10, "regions": [
+        {"label": "título + 3 números", "x": 0, "y": 0, "w": 12, "h": 2, "accent": true},
+        {"label": "prancha Estados/DF", "x": 0, "y": 2, "w": 6, "h": 6},
+        {"label": "prancha Capitais", "x": 6, "y": 2, "w": 6, "h": 6},
+        {"label": "capítulo 1", "x": 0, "y": 8, "w": 12, "h": 2}
+      ]}
+    }
+  ],
+  "reroll": true,
+  "steer": true
+}

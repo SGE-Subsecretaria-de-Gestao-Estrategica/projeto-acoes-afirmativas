@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>Seção do Diário</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FFFFFF;--ink:#16191D;--ink2:#4A5058;--ink3:#656B73;--rule:#DCDFE3;--green:#1F5F45;--green2:#174A36;--ok:#1F5F45;--nc:#9E3A2B;--esp:#3E6E8E;--ind:#B7791F;--wash:#F3F5F4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--paper);color:var(--ink);font:13px/1.4 "Public Sans",system-ui,sans-serif;display:grid;grid-template-columns:216px 1fr}
+nav{background:var(--green);color:#E8F0EC;padding:22px 0;display:flex;flex-direction:column}
+.brand{padding:0 22px 22px;border-bottom:1px solid rgba(255,255,255,.14)}
+.brand b{display:block;font-size:15px;letter-spacing:.01em;color:#fff}
+.brand span{font-size:11.5px;opacity:.75}
+nav a{display:flex;justify-content:space-between;padding:10px 22px;color:inherit;text-decoration:none;font-weight:500}
+nav a.on{background:var(--green2);color:#fff;box-shadow:inset 3px 0 0 #fff}
+nav a i{font-style:normal;opacity:.7;font-variant-numeric:tabular-nums}
+nav .sec{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;opacity:.85;padding:18px 22px 6px}
+nav .foot{margin-top:auto;padding:16px 22px;font-size:12px;opacity:.85;border-top:1px solid rgba(255,255,255,.14)}
+main{display:grid;grid-template-rows:auto auto 1fr;min-width:0}
+header{display:flex;align-items:flex-end;justify-content:space-between;padding:20px 28px 14px;border-bottom:1px solid var(--rule)}
+h1{font-size:21px;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--ink2);font-size:12.5px;margin-top:2px}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--ink2)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.l1::before{background:var(--ok)}.l2::before{background:var(--nc)}.l3::before{background:var(--esp)}.l4::before{background:var(--ind)}
+.filters{display:flex;gap:10px;align-items:center;padding:10px 28px;background:var(--wash);border-bottom:1px solid var(--rule)}
+.f{border:1px solid #C9CED3;background:#fff;padding:6px 10px;border-radius:4px;font-size:12.5px;color:var(--ink)}
+.f small{color:var(--ink3);margin-right:6px}
+.seg{display:flex;border:1px solid #C9CED3;border-radius:4px;overflow:hidden;background:#fff}
+.seg b{padding:6px 12px;font-weight:500;font-size:12.5px;border-right:1px solid #C9CED3}.seg b:last-child{border:0}
+.seg b.on{background:var(--ink);color:#fff}
+.f.q{width:240px;color:var(--ink3)}
+.work{display:grid;grid-template-columns:1fr 1fr;min-height:0}
+section{padding:16px 28px 0;min-width:0;overflow:hidden}
+section+section{border-left:1px solid var(--rule)}
+.sh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.sh h2{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:700}
+.sh h2 em{font-style:normal;color:var(--ink3);font-weight:500;margin-left:6px}
+.kpi{display:flex;gap:22px;padding:10px 0 10px;border-bottom:1px solid var(--rule)}
+.kpi div{font-size:11.5px;color:var(--ink2)}
+.kpi strong{display:block;font-size:20px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.agg{height:6px;display:flex;margin:2px 0 0;width:100%}
+.colh,.row{display:grid;grid-template-columns:134px 34px 1fr 74px;gap:12px;align-items:center}
+.colh{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);padding:8px 0 6px;border-bottom:1px solid var(--rule)}
+.row{padding:7px 0;border-bottom:1px solid #EDEFF1;min-height:43px}
+.row .n{font-variant-numeric:tabular-nums;color:var(--ink2);text-align:right}
+.row .nm{font-weight:600}
+.bar{display:flex;height:9px;background:#EEF0F2}
+.bar i{display:block;height:100%}
+.c{background:var(--ok)}.x{background:var(--nc)}.e{background:var(--esp)}.d{background:var(--ind)}
+.em{font-family:"Source Serif 4",Georgia,serif;font-size:12px;color:var(--ink2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.em .p{font-family:"Public Sans",sans-serif;font-size:11.5px;font-weight:600;color:var(--green);border:1px solid #B9CFC4;padding:0 4px;border-radius:2px;margin-right:6px}
+.v{font-size:11.5px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.v.ok{color:var(--ok)}.v.no{color:var(--nc)}.v.in{color:var(--ind)}
+.row.sel{background:var(--wash);box-shadow:-28px 0 0 var(--wash),28px 0 0 var(--wash)}
+.row.gap .nm{color:var(--ink3);font-weight:500}.row.gap .em{font-family:"Public Sans";font-size:11.5px;color:var(--ink3)}
+.row.gap .bar{background:repeating-linear-gradient(90deg,#E4E7EA 0 3px,transparent 3px 6px)}
+</style></head><body>
+<nav>
+ <div class="brand"><b>Cotas LPG</b><span>Conformidade com a IN MinC nº 5/2023</span></div>
+ <div class="sec">Painel</div>
+ <a class="on" href="#">Visão geral <i>48</i></a>
+ <a href="#">Estados e DF <i>25</i></a>
+ <a href="#">Capitais <i>25</i></a>
+ <a href="#">Editais <i>385</i></a>
+ <div class="sec">Revisão</div>
+ <a href="#">Não conformes <i>82</i></a>
+ <a href="#">Indeterminados <i>15</i></a>
+ <a href="#">Específicos <i>18</i></a>
+ <a href="#">Outras cotas</a>
+ <div class="foot">Base: lpg_editais.xlsx<br>Regras art. 5º, §§ 2º a 4º</div>
+</nav>
+<main>
+ <header>
+  <div><h1>Cumprimento da IN 5 por tipo de ente</h1><div class="sub">385 editais lidos · 268 conformes · 82 não conformes · 18 específicos · 15 indeterminados · 2 sem leitura</div></div>
+  <div class="legend"><span class="l1">Conforme</span><span class="l2">Não conforme</span><span class="l3">Específico</span><span class="l4">Indeterminado</span></div>
+ </header>
+ <div class="filters">
+  <div class="seg"><b class="on">Todos os grupos</b><b>Negros</b><b>Indígenas</b></div>
+  <div class="f"><small>Modalidade</small>Todas ▾</div>
+  <div class="f"><small>Área</small>Todas ▾</div>
+  <div class="f"><small>Ordem</small>Alfabética ▾</div>
+  <div class="f q">Buscar ente ou edital…</div>
+ </div>
+ <div class="work">
+  <section>
+   <div class="sh"><h2>Estados e DF<em>25 entes · 277 editais</em></h2><span class="sub">2 UFs sem editais na base</span></div>
+   <div class="kpi"><div><strong>8 de 25</strong>sem edital não conforme</div><div><strong>193</strong>editais conformes</div><div><strong>60</strong>não conformes</div><div><strong>6</strong>indeterminados</div></div>
+   <div class="agg"><i class="c" style="flex:193"></i><i class="x" style="flex:60"></i><i class="e" style="flex:16"></i><i class="d" style="flex:6"></i></div>
+   <div class="colh"><span>Ente</span><span style="text-align:right">Ed.</span><span>Editais por situação · motivo</span><span style="text-align:right">Situação</span></div>
+   <div class="row"><span class="nm">Acre</span><span class="n">4</span><div><div class="bar"><i class="c" style="flex:2"></i><i class="x" style="flex:1"></i><i class="e" style="flex:1"></i></div><div class="em"><span class="p">§3º</span>cotas não aplicadas em cada categoria</div></div><span class="v no">1 de 4</span></div>
+   <div class="row"><span class="nm">Alagoas</span><span class="n">27</span><div><div class="bar"><i class="c" style="flex:21"></i><i class="x" style="flex:3"></i><i class="e" style="flex:3"></i></div><div class="em"><span class="p">§4º</span>total reservado abaixo do mínimo do edital</div></div><span class="v no">3 de 27</span></div>
+   <div class="row"><span class="nm">Amapá</span><span class="n">2</span><div><div class="bar"><i class="c" style="flex:2"></i></div><div class="em">todos os editais reservam 20% e 10%</div></div><span class="v ok">Cumpre</span></div>
+   <div class="row"><span class="nm">Amazonas</span><span class="n">11</span><div><div class="bar"><i class="c" style="flex:3"></i><i class="x" style="flex:1"></i><i class="e" style="flex:4"></i><i class="d" style="flex:3"></i></div><div class="em"><span class="p">art. 5º</span>3 editais sem leitura conclusiva das vagas</div></div><span class="v no">1 de 11</span></div>
+   <div class="row"><span class="nm">Bahia</span><span class="n">3</span><div><div class="bar"><i class="c" style="flex:2"></i><i class="x" style="flex:1"></i></div><div class="em"><span class="p">§3º</span>cotas não aplicadas em cada categoria</div></div><span class="v no">1 de 3</span></div>
+   <div class="row sel"><span class="nm">Ceará</span><span class="n">14</span><div><div class="bar"><i class="c" style="flex:2"></i><i class="x" style="flex:10"></i><i class="e" style="flex:1"></i><i class="d" style="flex:1"></i></div><div class="em"><span class="p">caput</span>nenhuma cota identificada para o grupo em 10 editais</div></div><span class="v no">10 de 14</span></div>
+   <div class="row"><span class="nm">Distrito Federal</span><span class="n">3</span><div><div class="bar"><i class="c" style="flex:1"></i><i class="x" style="flex:2"></i></div><div class="em"><span class="p">§3º</span>sem reserva informada em categorias</div></div><span class="v no">2 de 3</span></div>
+   <div class="row"><span class="nm">Espírito Santo</span><span class="n">22</span><div><div class="bar"><i class="c" style="flex:15"></i><i class="x" style="flex:6"></i><i class="d" style="flex:1"></i></div><div class="em"><span class="p">§3º</span>abaixo do mínimo em categorias de vaga única</div></div><span class="v no">6 de 22</span></div>
+   <div class="row"><span class="nm">Goiás</span><span class="n">21</span><div><div class="bar"><i class="c" style="flex:19"></i><i class="e" style="flex:2"></i></div><div class="em">19 conformes e 2 editais específicos</div></div><span class="v ok">Cumpre</span></div>
+   <div class="row gap"><span class="nm">Maranhão</span><span class="n">—</span><div><div class="bar"></div><div class="em">nenhum edital LPG na base</div></div><span class="v" style="color:var(--ink3)">Sem dados</span></div>
+   <div class="row"><span class="nm">Mato Grosso</span><span class="n">12</span><div><div class="bar"><i class="c" style="flex:3"></i><i class="x" style="flex:9"></i></div><div class="em"><span class="p">§3º</span>cotas não aplicadas em cada categoria</div></div><span class="v no">9 de 12</span></div>
+   <div class="row"><span class="nm">Mato Grosso do Sul</span><span class="n">4</span><div><div class="bar"><i class="c" style="flex:4"></i></div><div class="em">todos os editais reservam 20% e 10%</div></div><span class="v ok">Cumpre</span></div>
+  </section>
+  <section>
+   <div class="sh"><h2>Capitais<em>25 entes · 108 editais</em></h2><span class="sub">Manaus sem editais na base</span></div>
+   <div class="kpi"><div><strong>13 de 25</strong>sem edital não conforme</div><div><strong>75</strong>editais conformes</div><div><strong>22</strong>não conformes</div><div><strong>9</strong>indeterminados</div></div>
+   <div class="agg"><i class="c" style="flex:75"></i><i class="x" style="flex:22"></i><i class="e" style="flex:2"></i><i class="d" style="flex:9"></i></div>
+   <div class="colh"><span>Ente</span><span style="text-align:right">Ed.</span><span>Editais por situação · motivo</span><span style="text-align:right">Situação</span></div>
+   <div class="row"><span class="nm">Aracaju</span><span class="n">3</span><div><div class="bar"><i class="c" style="flex:2"></i><i class="x" style="flex:1"></i></div><div class="em"><span class="p">§3º</span>cotas não aplicadas em cada categoria</div></div><span class="v no">1 de 3</span></div>
+   <div class="row"><span class="nm">Belo Horizonte</span><span class="n">3</span><div><div class="bar"><i class="c" style="flex:3"></i></div><div class="em">todos os editais reservam 20% e 10%</div></div><span class="v ok">Cumpre</span></div>
+   <div class="row"><span class="nm">Belém</span><span class="n">6</span><div><div class="bar"><i class="c" style="flex:6"></i></div><div class="em">todos os editais reservam 20% e 10%</div></div><span class="v ok">Cumpre</span></div>
+   <div class="row"><span class="nm">Boa Vista</span><span class="n">2</span><div><div class="bar"><i class="c" style="flex:2"></i></div><div class="em">todos os editais reservam 20% e 10%</div></div><span class="v ok">Cumpre</span></div>
+   <div class="row"><span class="nm">Campo Grande</span><span class="n">4</span><div><div class="bar"><i class="c" style="flex:4"></i></div><div class="em">todos os editais reservam 20% e 10%</div></div><span class="v ok">Cumpre</span></div>
+   <div class="row"><span class="nm">Cuiabá</span><span class="n">3</span><div><div class="bar"><i class="x" style="flex:2"></i><i class="d" style="flex:1"></i></div><div class="em"><span class="p">caput</span>nenhuma cota identificada para o grupo</div></div><span class="v no">2 de 3</span></div>
+   <div class="row"><span class="nm">Curitiba</span><span class="n">4</span><div><div class="bar"><i class="x" style="flex:2"></i><i class="d" style="flex:2"></i></div><div class="em"><span class="p">§4º</span>total reservado abaixo do mínimo; 2 indeterminados</div></div><span class="v no">2 de 4</span></div>
+   <div class="row"><span class="nm">Florianópolis</span><span class="n">5</span><div><div class="bar"><i class="c" style="flex:2"></i><i class="x" style="flex:3"></i></div><div class="em"><span class="p">§3º</span>abaixo do mínimo em categorias</div></div><span class="v no">3 de 5</span></div>
+   <div class="row"><span class="nm">Fortaleza</span><span class="n">4</span><div><div class="bar"><i class="c" style="flex:1"></i><i class="x" style="flex:2"></i><i class="e" style="flex:1"></i></div><div class="em"><span class="p">§3º</span>sem reserva informada em categorias</div></div><span class="v no">2 de 4</span></div>
+   <div class="row"><span class="nm">Goiânia</span><span class="n">4</span><div><div class="bar"><i class="c" style="flex:4"></i></div><div class="em">todos os editais reservam 20% e 10%</div></div><span class="v ok">Cumpre</span></div>
+   <div class="row"><span class="nm">João Pessoa</span><span class="n">2</span><div><div class="bar"><i class="c" style="flex:1"></i><i class="x" style="flex:1"></i></div><div class="em"><span class="p">§3º</span>cotas não aplicadas em cada categoria</div></div><span class="v no">1 de 2</span></div>
+   <div class="row gap"><span class="nm">Manaus</span><span class="n">—</span><div><div class="bar"></div><div class="em">nenhum edital LPG na base</div></div><span class="v" style="color:var(--ink3)">Sem dados</span></div>
+  </section>
+ </div>
+</main>
+</body></html>

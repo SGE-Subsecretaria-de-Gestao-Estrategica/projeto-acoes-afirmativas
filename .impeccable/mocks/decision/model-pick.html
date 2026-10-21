@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>Painel de Athos — Conformidade IN 5</title>
+<link href="https://fonts.googleapis.com/css2?family=Rawline:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F6F8;--ink:#0F2A4A;--blue:#2456A6;--ochre:#E3A72F;--red:#C2473A;--line:#D6DCE3;--mute:#5B6B7F}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--bg);color:var(--ink);font:14px/1.4 "Source Sans 3",system-ui,sans-serif}
+header{height:56px;background:var(--ink);color:#fff;display:flex;align-items:center;padding:0 28px;gap:32px}
+header .brand{font-weight:700;font-size:16px;letter-spacing:.01em}
+header .brand span{font-weight:400;opacity:.7;margin-left:8px}
+nav.tabs{display:flex;height:100%}
+nav.tabs a{display:flex;align-items:center;padding:0 20px;color:#C9D6E8;text-decoration:none;font-weight:600;border-bottom:3px solid transparent}
+nav.tabs a.on{color:#fff;border-bottom-color:var(--ochre)}
+header .src{margin-left:auto;font-size:12px;opacity:.7}
+.bar{height:56px;display:flex;align-items:center;gap:12px;padding:0 28px;border-bottom:1px solid var(--line);background:#fff}
+.bar select,.bar input{height:34px;border:1px solid var(--line);border-radius:4px;padding:0 10px;font:inherit;color:var(--ink);background:#fff}
+.bar input{width:240px}
+.legend{margin-left:auto;display:flex;gap:18px;font-size:13px;color:var(--mute)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend b{width:16px;height:16px}
+main{display:grid;grid-template-columns:1fr 440px;height:788px}
+.mosaic{padding:20px 24px 20px 28px;overflow:hidden}
+.mosaic .head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px}
+.mosaic h2{font-size:20px;font-weight:700}
+.mosaic .sum{color:var(--mute);font-size:13px}
+.sum strong{color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.p{background:#fff;border:1px solid var(--line);border-radius:4px;padding:8px 9px 9px;height:126px}
+.p.sel{border:2px solid var(--blue);padding:7px 8px 8px;box-shadow:0 0 0 3px rgba(36,86,166,.12)}
+.p h4{font-size:12.5px;font-weight:600;display:flex;justify-content:space-between;margin-bottom:6px;white-space:nowrap}
+.p h4 em{font-style:normal;color:var(--mute);font-weight:400;font-variant-numeric:tabular-nums}
+.t{display:flex;flex-wrap:wrap;gap:2px}
+b{display:block;width:14px;height:14px}
+/* Bulcão-like motifs: status by colour AND shape */
+b.c{background:var(--blue);background-image:radial-gradient(circle at 0 0,#fff 0 45%,transparent 46%)}
+b.e{background:var(--ochre);background-image:radial-gradient(circle,#fff 0 28%,transparent 29%)}
+b.i{background:#fff;border:1.5px dashed var(--mute)}
+b.n{background:var(--red);background-image:linear-gradient(135deg,#fff 0 50%,transparent 50%)}
+aside{background:#fff;border-left:1px solid var(--line);padding:22px 26px;overflow:hidden}
+aside .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);font-weight:600}
+aside h2{font-size:26px;font-weight:700;margin:2px 0 4px}
+aside .meta{color:var(--mute);font-size:13px;margin-bottom:16px}
+.big{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px}
+.big b{width:30px;height:30px}
+.counts{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:4px;margin-bottom:18px}
+.counts div{padding:10px 12px;border-right:1px solid var(--line)}
+.counts div:last-child{border-right:0}
+.counts strong{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.counts span{font-size:12px;color:var(--mute)}
+h3{font-size:14px;font-weight:700;margin-bottom:8px}
+.why{list-style:none;margin-bottom:18px}
+.why li{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px}
+.why li b{flex:none;margin-top:2px}
+.why .n0{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--mute)}
+.pct{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.pct div{border:1px solid var(--line);border-radius:4px;padding:10px 12px}
+.pct strong{font-size:20px}
+.pct small{display:block;color:var(--mute);font-size:12px}
+.meter{height:6px;background:#E7EBF0;border-radius:3px;margin-top:6px;position:relative}
+.meter i{position:absolute;inset:0 auto 0 0;background:var(--blue);border-radius:3px}
+.meter u{position:absolute;top:-3px;width:2px;height:12px;background:var(--ink)}
+.btn{display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:4px;background:var(--blue);color:#fff;font-weight:600;text-decoration:none}
+.note{font-size:12px;color:var(--mute);margin-top:10px}
+</style></head><body>
+<header>
+  <div class="brand">Cotas na LPG<span>Conformidade com a IN MinC nº 5/2023</span></div>
+  <nav class="tabs"><a class="on" href="#">Estados/DF</a><a href="#">Capitais</a><a href="#">Editais</a></nav>
+  <div class="src">Base: 385 editais · 50 entes</div>
+</header>
+<div class="bar">
+  <select><option>Todas as modalidades</option></select>
+  <select><option>Todas as áreas</option></select>
+  <select><option>Situação: todas</option></select>
+  <input placeholder="Buscar ente ou edital">
+  <div class="legend">
+    <span><b class="c"></b>Conforme</span><span><b class="n"></b>Não conforme</span>
+    <span><b class="e"></b>Específico</span><span><b class="i"></b>Indeterminado</span>
+  </div>
+</div>
+<main>
+<section class="mosaic">
+  <div class="head"><h2>Estados e Distrito Federal</h2>
+  <div class="sum"><strong>277</strong> editais · <strong>25</strong> entes · um azulejo por edital · ordem alfabética · sem dados: Maranhão, Roraima</div></div>
+  <div class="grid">
+<div class="p"><h4>Acre<em>4</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="e"></b><b class="n"></b></div></div>
+<div class="p"><h4>Alagoas<em>27</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="e"></b><b class="e"></b><b class="e"></b><b class="n"></b><b class="n"></b><b class="n"></b></div></div>
+<div class="p"><h4>Amapá<em>2</em></h4><div class="t"><b class="c"></b><b class="c"></b></div></div>
+<div class="p"><h4>Amazonas<em>11</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="e"></b><b class="e"></b><b class="e"></b><b class="e"></b><b class="i"></b><b class="i"></b><b class="i"></b><b class="n"></b></div></div>
+<div class="p"><h4>Bahia<em>3</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="n"></b></div></div>
+<div class="p sel"><h4>Ceará<em>15</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="e"></b><b class="i"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b></div></div>
+<div class="p"><h4>Distrito Federal<em>3</em></h4><div class="t"><b class="c"></b><b class="n"></b><b class="n"></b></div></div>
+<div class="p"><h4>Espírito Santo<em>22</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="i"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b></div></div>
+<div class="p"><h4>Goiás<em>21</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="e"></b><b class="e"></b></div></div>
+<div class="p"><h4>Mato Grosso<em>12</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b></div></div>
+<div class="p"><h4>Mato Grosso do Sul<em>4</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b></div></div>
+<div class="p"><h4>Minas Gerais<em>10</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="n"></b><b class="n"></b></div></div>
+<div class="p"><h4>Paraná<em>12</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="e"></b><b class="n"></b></div></div>
+<div class="p"><h4>Paraíba<em>13</em></h4><div class="t"><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b></div></div>
+<div class="p"><h4>Pará<em>28</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="e"></b><b class="n"></b><b class="n"></b></div></div>
+<div class="p"><h4>Pernambuco<em>12</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b></div></div>
+<div class="p"><h4>Piauí<em>6</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="n"></b></div></div>
+<div class="p"><h4>Rio Grande do Norte<em>4</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b></div></div>
+<div class="p"><h4>Rio Grande do Sul<em>7</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="n"></b><b class="n"></b></div></div>
+<div class="p"><h4>Rio de Janeiro<em>19</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="e"></b><b class="e"></b></div></div>
+<div class="p"><h4>Rondônia<em>5</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="n"></b></div></div>
+<div class="p"><h4>Santa Catarina<em>5</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="n"></b></div></div>
+<div class="p"><h4>Sergipe<em>3</em></h4><div class="t"><b class="c"></b><b class="i"></b></div></div>
+<div class="p"><h4>São Paulo<em>24</em></h4><div class="t"><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b><b class="c"></b></div></div>
+<div class="p"><h4>Tocantins<em>5</em></h4><div class="t"><b class="e"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b></div></div>
+  </div>
+</section>
+<aside>
+  <div class="k">Estado selecionado</div>
+  <h2>Ceará</h2>
+  <div class="meta">14 editais analisados · 808 vagas em editais universais</div>
+  <div class="big"><b class="c"></b><b class="c"></b><b class="e"></b><b class="i"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b><b class="n"></b></div>
+  <div class="counts">
+    <div><strong>2</strong><span>Conformes</span></div>
+    <div><strong>10</strong><span>Não conformes</span></div>
+    <div><strong>1</strong><span>Específico</span></div>
+    <div><strong>1</strong><span>Indeterminado</span></div>
+  </div>
+  <h3>Por que não conformes</h3>
+  <ul class="why">
+    <li><b class="n"></b>Nenhuma cota identificada para o grupo<span class="n0">8</span></li>
+    <li><b class="n"></b>Abaixo do mínimo em uma categoria (§3º)<span class="n0">1</span></li>
+    <li><b class="n"></b>Total reservado abaixo do mínimo (§4º)<span class="n0">1</span></li>
+  </ul>
+  <h3>Reserva agregada nos editais universais</h3>
+  <div class="pct">
+    <div><small>Pessoas negras · mínimo 20%</small><strong>10,3%</strong><div class="meter"><i style="width:34%"></i><u style="left:66%"></u></div></div>
+    <div><small>Pessoas indígenas · mínimo 10%</small><strong>4,6%</strong><div class="meter"><i style="width:15%"></i><u style="left:33%"></u></div></div>
+  </div>
+  <a class="btn" href="#">Abrir os 14 editais</a>
+  <p class="note">Abaixo do mínimo agregado não é, por si só, descumprimento: editais específicos e o arredondamento do §2º podem explicar a diferença.</p>
+</aside>
+</main>
+</body></html>
