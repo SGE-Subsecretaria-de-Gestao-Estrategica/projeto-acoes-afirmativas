@@ -167,7 +167,7 @@ A densidade é de ferramenta de trabalho. Linhas em colunas fixas, números tabu
 A incerteza é desenhada, não escondida: "sem leitura" tem hachura própria, entes ausentes da base aparecem como linha tracejada "sem editais na base", e indeterminado tem cor própria (âmbar), distinta de não conforme.
 
 **Key Characteristics:**
-- Papel branco plano, tinta quase preta, verde institucional restrito ao trilho, à remissão e a ações de prova.
+- Papel branco plano, tinta quase preta, verde institucional restrito ao trilho (ou à faixa de cabeçalho nos relatórios de leitura), à remissão e a ações de prova.
 - Cinco estados com cor fixa: conforme, não conforme, específico, indeterminado, sem leitura.
 - Grotesco (Public Sans) na interface; serifa (Source Serif 4) só em ementas, objeto e trechos citados.
 - Fios de 1px; cabeçalho de seção com fio de 2px em tinta; sem cartões, sem sombras de superfície.
@@ -179,7 +179,7 @@ A incerteza é desenhada, não escondida: "sem leitura" tem hachura própria, en
 Paleta de papel e tinta com um verde institucional e quatro cores de estado dessaturadas, cada uma com seu lavado.
 
 ### Primary
-- **Verde Institucional** (verde): fundo do trilho de navegação, cor da remissão §, do link de volta, de links de prova e páginas citadas, do anel de foco, do marcador de mínimo nos medidores e do número "entes sem não conforme". Também é a cor de estado conforme (ok, mesmo valor).
+- **Verde Institucional** (verde): fundo do trilho de navegação, cor da remissão §, do link de volta, de links de prova e páginas citadas, do anel de foco, do marcador de mínimo nos medidores e do número "entes sem não conforme". Nos relatórios de leitura, é o fundo da faixa de cabeçalho e a cor da numeração das respostas. Também é a cor de estado conforme (ok, mesmo valor).
 - **Verde Fundo de Trilho** (verde-2): item ativo do trilho.
 - **Verde Lavado** (verde-3): fundo da remissão §, do selo conforme e do trecho de evidência alvo (`:target`).
 - **Verde Texto de Trilho** (verde-txt): texto em repouso sobre o trilho.
@@ -236,6 +236,8 @@ Refluxo por células inteiras, nunca por encolhimento: a 1240px as duas colunas 
 
 Hover de linha estende o lavado para além da medianiz (28px, 12px na coluna única, 16px no móvel) por sombra sem desfoque, para a linha ler como faixa inteira sem alterar a grade.
 
+Relatórios de leitura (páginas HTML únicas, sem trilho) trocam o trilho lateral pela faixa verde de cabeçalho em largura total e seguem numa coluna única centrada (1120 a 1180px, medianiz de 28px, 16px no móvel). Cada resposta ocupa uma grade de duas colunas, número em 64px e corpo fluido, separada da seguinte por fio de 1px; no móvel o número sobe para cima do título. Na impressão a faixa perde o fundo e vira fio de 2px em verde.
+
 ## Elevation & Depth
 
 O sistema é plano. A profundidade vem de fios, do lavado sob a barra de filtros e da coluna de evidências em #fbfcfb; não há cartões nem sombras de superfície. A única camada flutuante é o texto da remissão §, que usa uma sombra ambiente suave por ser um tooltip sobre o conteúdo.
@@ -283,6 +285,9 @@ Grade fixa: marcador quadrado de status, nome em 600, contagem tabular, barra em
 ### Remissão § (assinatura)
 Etiqueta 11.5px peso 600 em verde sobre verde lavado, raio 2px, focável. Em hover ou foco revela, abaixo, o texto resumido do parágrafo da IN 5 sobre tinta (280px, 12.5px), com entrada de 160ms em opacidade e 3px de deslocamento.
 
+### Faixa e resposta numerada (relatórios de leitura)
+A faixa é a moldura dos relatórios de leitura: fundo verde, título em branco 700 com `text-wrap: balance`, linha de apoio em serifa e metadados da série acima de um fio branco translúcido. Abaixo, cada resposta ou achado abre com o número grande em verde 700 (40px, 30px no móvel), título em Public Sans, ementa em serifa no corpo de leitura (máx. 62ch) e prova abaixo; o limite da resposta fecha com fio tracejado em fio-forte. Seções sem número abrem com o cabeçalho de seção sobre fio de 2px em tinta.
+
 ### Evidência
 Trecho em serifa 14px com fio esquerdo de 1px em tinta-3, campo e página (verde) acima. O trecho alvo de um link de prova ganha fundo verde lavado.
 
@@ -297,8 +302,8 @@ Trecho em serifa 14px com fio esquerdo de 1px em tinta-3, campo e página (verde
 - **Do** usar a serifa apenas para ementas, objeto e trechos do edital.
 
 ### Don't:
-- **Don't** usar cartões, sombras de superfície ou fundos coloridos de área; a única sombra é a do tooltip da remissão.
+- **Don't** usar cartões, sombras de superfície ou fundos coloridos de área; a única sombra é a do tooltip da remissão. O verde do trilho e da faixa dos relatórios é moldura de navegação, não fundo de conteúdo.
 - **Don't** pintar linhas ou blocos inteiros de tijolo, nem ordenar entes como ranking de piores.
 - **Don't** fundir indeterminado ou sem leitura com não conforme; cada um tem marca própria.
-- **Don't** usar o verde institucional como decoração; ele marca navegação, remissão, prova, foco e conforme.
+- **Don't** usar o verde institucional como decoração; ele marca navegação (trilho, faixa e numeração das respostas), remissão, prova, foco e conforme.
 - **Don't** arredondar além de 3px nem usar glifos de ícone; chevrons e marcadores são desenhados em CSS.

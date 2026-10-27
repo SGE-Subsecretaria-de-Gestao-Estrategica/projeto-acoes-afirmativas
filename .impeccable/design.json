@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-16T18:28:57+00:00",
+  "generatedAt": "2026-10-27T12:00:00+00:00",
   "title": "Design System: Cotas LPG",
   "extensions": {
     "colorMeta": {
@@ -496,7 +496,7 @@
     "northStar": "A Gazeta Oficial em Tela",
     "overview": "O painel se comporta como uma seção de atos do Diário Oficial: papel branco, tinta quase preta, fios finos separando cada ato e um único trilho de navegação em verde institucional. Cada ente e cada edital é tratado como um ato publicado: um veredito curto em linguagem de ementa, a remissão ao parágrafo da IN 5 que o fundamenta e, a um clique, o trecho literal e a página do edital.\n\nA densidade é de ferramenta de trabalho. Linhas em colunas fixas, números tabulares, rótulos pequenos e nenhuma moldura decorativa: não há cartões nem sombras de superfície, e a hierarquia vem de fios (1px para separar, 2px de tinta para abrir uma seção), peso tipográfico e da troca entre o grotesco de interface e a serifa de texto. A cor carrega estado, não decoração; o vermelho é tijolo discreto, nunca alarme, porque abaixo do mínimo não é automaticamente descumprimento.\n\nA incerteza é desenhada, não escondida: \"sem leitura\" tem hachura própria, entes ausentes da base aparecem como linha tracejada \"sem editais na base\", e indeterminado tem cor própria (âmbar), distinta de não conforme.",
     "keyCharacteristics": [
-      "Papel branco plano, tinta quase preta, verde institucional restrito ao trilho, à remissão e a ações de prova.",
+      "Papel branco plano, tinta quase preta, verde institucional restrito ao trilho (ou à faixa de cabeçalho nos relatórios de leitura), à remissão e a ações de prova.",
       "Cinco estados com cor fixa: conforme, não conforme, específico, indeterminado, sem leitura.",
       "Grotesco (Public Sans) na interface; serifa (Source Serif 4) só em ementas, objeto e trechos citados.",
       "Fios de 1px; cabeçalho de seção com fio de 2px em tinta; sem cartões, sem sombras de superfície.",
@@ -539,10 +539,10 @@
       "**Do** usar a serifa apenas para ementas, objeto e trechos do edital."
     ],
     "donts": [
-      "**Don't** usar cartões, sombras de superfície ou fundos coloridos de área; a única sombra é a do tooltip da remissão.",
+      "**Don't** usar cartões, sombras de superfície ou fundos coloridos de área; a única sombra é a do tooltip da remissão. O verde do trilho e da faixa dos relatórios é moldura de navegação, não fundo de conteúdo.",
       "**Don't** pintar linhas ou blocos inteiros de tijolo, nem ordenar entes como ranking de piores.",
       "**Don't** fundir indeterminado ou sem leitura com não conforme; cada um tem marca própria.",
-      "**Don't** usar o verde institucional como decoração; ele marca navegação, remissão, prova, foco e conforme.",
+      "**Don't** usar o verde institucional como decoração; ele marca navegação (trilho, faixa e numeração das respostas), remissão, prova, foco e conforme.",
       "**Don't** arredondar além de 3px nem usar glifos de ícone; chevrons e marcadores são desenhados em CSS."
     ]
   }

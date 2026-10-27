@@ -22,6 +22,7 @@ ESTADO_PDF_ROOT: str = Path(PDF_ROOT / 'ESTADO')
 
 # LPG - LEI PAULO GUSTAVO
 LPG_PDF_ROOT = DATA_PATH / 'EDITAIS'            # data/EDITAIS/{Capitais,Estados}/<ente>/*.pdf
+LPG_NOVOS_ROOT = DATA_PATH / 'NOVOS'              # editais avulsos: NOVOS/<pasta>/*.pdf (ente pelo nome do arquivo)
 LPG_PASTAS_IGNORADAS = {'outros editais', 'PlanilhasPC'}
 LPG_INTERIM = INTERIM_DATA_PATH / 'LPG'
 LPG_MD_ROOT = LPG_INTERIM / 'MD'                # editais convertidos para Markdown
@@ -31,6 +32,10 @@ LPG_LLM_RAW = LPG_INTERIM / 'llm_raw'           # JSON bruto por edital (cache/r
 LPG_GASTOS = LPG_INTERIM / 'gastos.csv'         # gasto real por chamada
 LPG_BATCHES = LPG_INTERIM / 'batches.csv'       # batches enviados
 LPG_OUTPUT = FINAL_DATA_PATH / 'lpg_editais.xlsx'
+
+# Endereço da pasta 'ações afirmativas' no SharePoint/OneDrive (sem barra no fim), para links absolutos
+# na planilha de avaliação. Vazio = links relativos (../editais/...).
+SHAREPOINT_PASTA_URL = 'https://culturagov-my.sharepoint.com/personal/gabriel_bizerril_cultura_gov_br/Documents/Projeto%20LPG/a%C3%A7%C3%B5es%20afirmativas'
 
 MIN_CHARS_POR_PAGINA = 200  # abaixo disso o PDF é tratado como escaneado
 
@@ -50,6 +55,7 @@ DESCONTO_BATCH = 0.5
 
 # IN MinC nº 5/2023, art. 5º
 COTA_MIN = {'negras': 0.20, 'indigenas': 0.10}
+
 
 # CONTROLE CONVERSAO
 LOG_PATH = Path(INTERIM_DATA_PATH/'controle_conversao.csv')

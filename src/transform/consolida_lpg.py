@@ -62,7 +62,7 @@ def consolidar(manifesto: pd.DataFrame) -> dict[str, pd.DataFrame]:
         base = {
             "id": m["id"], "tipo_ente": m["tipo_ente"], "ente": m["ente"],
             "cod_ibge": cod_ibge(m["ente"], m["tipo_ente"]), "arquivo_pdf": m["arquivo"],
-            "modo_leitura": m["modo"], "paginas": m.get("paginas"), "status_extracao": raw["status"],
+            "origem": m.get("origem", "base"), "modo_leitura": m["modo"], "paginas": m.get("paginas"), "status_extracao": raw["status"],
         }
         if not d:
             editais.append(base | {"erro_extracao": raw.get("erro", "")})
@@ -73,6 +73,8 @@ def consolidar(manifesto: pd.DataFrame) -> dict[str, pd.DataFrame]:
             "possui_categorias", "cotas_por_categoria", "edital_especifico_grupo", "observacoes",
         )}
         linha["n_categorias"] = len(d["categorias"])
+        vagas_cat = [c["vagas"] for c in d["categorias"] if c["vagas"] is not None]
+        linha["numero_vagas_categoria_total"] = sum(vagas_cat) if vagas_cat else None
         linha["outras_cotas"] = "; ".join(
             f"{o['grupo']}" + (f" ({o['percentual']:g})" if o["percentual"] is not None else "")
             for o in d["outras_cotas"]
@@ -114,6 +116,24 @@ def salva_excel(tabelas: dict[str, pd.DataFrame]) -> None:
             df.map(lambda v: _ILEGAIS.sub("", v) if isinstance(v, str) else v).to_excel(xw, sheet_name=nome, index=False)
     e = tabelas["editais"]
     print(f"📄 {settings.LPG_OUTPUT}")
+    _resumo_status(e)
+
+
+def salva_filtrada(fora: list[str], grafia: dict[str, str]) -> Path:
+    """Cópia de lpg_editais.xlsx sem os editais fora do escopo, com data e hora no nome."""
+    abas = pd.read_excel(settings.LPG_OUTPUT, sheet_name=None)
+    abas = {nome: df[~df["arquivo_pdf"].isin(fora)].assign(ente=lambda x: x["ente"].replace(grafia))
+            for nome, df in abas.items()}
+    saida = settings.LPG_OUTPUT.with_name(f"{settings.LPG_OUTPUT.stem}__{pd.Timestamp.now():%Y-%m-%d_%H-%M}.xlsx")
+    with pd.ExcelWriter(saida, engine="openpyxl") as xw:
+        for nome, df in abas.items():
+            df.to_excel(xw, sheet_name=nome, index=False)
+    print(f"📄 {saida} ({len(fora)} arquivos fora do escopo removidos)")
+    _resumo_status(abas["editais"])
+    return saida
+
+
+def _resumo_status(e: pd.DataFrame) -> None:
     print(e["status_extracao"].value_counts().to_string())
     if "status_in5" in e:
         print(e["status_in5"].value_counts(dropna=False).to_string())

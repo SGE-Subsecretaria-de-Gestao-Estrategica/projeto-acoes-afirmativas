@@ -5,6 +5,7 @@
 2) calcula_f1(): lê a planilha revisada e calcula precisão, revocação e F1 por campo.
 """
 from pathlib import Path
+from urllib.parse import quote
 
 import pandas as pd
 from openpyxl import load_workbook
@@ -20,22 +21,38 @@ F1_SAIDA = settings.FINAL_DATA_PATH / "f1_lpg.xlsx"
 
 # (coluna na planilha final, campo da evidência, o que conferir no edital)
 CAMPOS = [
-    ("objeto", "objeto", "O objeto está correto? (não precisa ser literal)"),
     ("vagas_totais", "vagas_totais", "Total de vagas/projetos/prêmios do edital"),
     ("valor_total", "valor_total", "Valor total do edital, em reais"),
     ("possui_categorias", "categorias", "O edital é dividido em categorias/módulos/linhas com vagas próprias?"),
-    ("n_categorias", "categorias", "Quantas categorias com vagas próprias"),
-    ("cotas_por_categoria", "cotas_por_categoria", "As cotas valem em cada categoria? (sim / nao / nao_informado / sem_categorias)"),
+    ("numero_vagas_categoria_total", "categorias", "Soma das vagas de todas as categorias do edital"),
     ("perc_cotas_negras", "percentual_negras", "Percentual de cota para pessoas negras, em decimal (0.2)"),
+    ("vagas_cotas_negras", "vagas_negras_total", "Vagas reservadas a pessoas negras no edital (soma das categorias, ou percentual × vagas com o arredondamento da IN)"),
     ("perc_cotas_indigenas", "percentual_indigenas", "Percentual de cota para pessoas indígenas, em decimal (0.1)"),
+    ("vagas_cotas_indigenas", "vagas_indigenas_total", "Vagas reservadas a pessoas indígenas no edital (soma das categorias, ou percentual × vagas com o arredondamento da IN)"),
     ("edital_especifico_grupo", "edital_especifico_grupo", "O edital inteiro é para um grupo? Qual?"),
-    ("tem_cota_pcd", "pcd", "Há reserva de vagas (cota) para PcD? (bônus na nota não conta)"),
-    ("tem_cota_lgbtqia", "lgbtqia", "Há reserva de vagas (cota) para LGBTQIA+?"),
-    ("tem_cota_quilombolas", "quilombolas", "Há reserva de vagas (cota) para quilombolas?"),
-    ("status_in5", None, "Classificação final: conforme / nao_conforme / indeterminado / especifico / nao_aplicavel"),
+    ("outras_cotas", "outras_cotas", "Cotas (reserva de vagas) para outros grupos além de negros e indígenas, com o percentual. Bônus na nota não conta"),
 ]
-CAMPOS_SIM_NAO = {"possui_categorias", "tem_cota_pcd", "tem_cota_lgbtqia", "tem_cota_quilombolas"}
-NULOS = {"", "nan", "none", "null", "false", "0", "sem_categorias", "nao_aplicavel"}
+CAMPOS_SIM_NAO = {"possui_categorias"}
+
+# Link do PDF relativo à planilha. Funciona no SharePoint/OneDrive se a estrutura for
+#   <pasta>/validação/gabarito_revisao_lpg.xlsx  e  <pasta>/editais/<Capitais|Estados>/<ente>/<arquivo>.pdf
+# e também localmente (data/final -> data/EDITAIS), para os editais da base.
+LINK_RELATIVO = "../editais/{pasta_tipo}/{ente}/{arquivo}"
+LINK_RELATIVO_NOVOS = "../editais/NOVOS/{caminho}"  # data/NOVOS/<subpasta>/<arquivo> -> editais/NOVOS/...
+
+
+def link_pdf(row: pd.Series) -> str:
+    if row.get("origem") == "novos":
+        caminho = Path(row["pdf_path"]).resolve().relative_to(settings.LPG_NOVOS_ROOT.resolve()).as_posix()
+        rel = LINK_RELATIVO_NOVOS.format(caminho=caminho)
+    else:
+        rel = LINK_RELATIVO.format(
+            pasta_tipo="Capitais" if row["tipo_ente"] == "CAPITAL" else "Estados", ente=row["ente"], arquivo=row["arquivo"],
+        )
+    if settings.SHAREPOINT_PASTA_URL:  # link absoluto: funciona para quem tem acesso à pasta, de onde quer que abra
+        return settings.SHAREPOINT_PASTA_URL.rstrip("/") + "/" + quote(rel.removeprefix("../"))
+    return rel
+NULOS = {"", "nan", "none", "null", "sem_categorias", "nao_aplicavel"}  # 0 é valor, não ausência
 
 
 def _vazio(v, campo: str = "") -> bool:
@@ -73,7 +90,6 @@ def gera_planilha_revisao(sobrescrever: bool = False) -> Path:
     editais, evid = x["editais"], x["evidencias"]
     amostra = pd.read_csv(AMOSTRA, sep=";", dtype=str)
     sel = editais[editais["id"].isin(amostra["id"])].sort_values(["tipo_ente", "ente", "arquivo_pdf"])
-    paths = amostra.set_index("id")["pdf_path"]
 
     linhas = []
     for n, (_, e) in enumerate(sel.iterrows(), start=1):
@@ -90,13 +106,13 @@ def gera_planilha_revisao(sobrescrever: bool = False) -> Path:
     df = pd.DataFrame(linhas)
 
     instrucoes = pd.DataFrame({"Como revisar": [
-        "1. Para cada edital (coluna n), abra o PDF pelo link da coluna arquivo_pdf.",
+        "1. Para cada edital (coluna n), abra o PDF pelo link da coluna arquivo_pdf (link relativo: funciona com a planilha em 'validação' e os PDFs em 'editais/<Capitais|Estados>/<ente>/' ou 'editais/NOVOS/').",
         "2. Em cada linha, compare valor_modelo com o edital. A evidência e a página ajudam a localizar.",
         "3. modelo_correto: S se o valor do modelo está certo (inclusive vazio, quando o edital realmente não traz a informação); N se está errado.",
-        "4. valor_real: preencha só quando modelo_correto = N, com o valor correto. Se a informação não existe no edital, escreva 'nenhum'. Nos campos sim/não, escreva 'sim' ou 'não'.",
+        "4. valor_real: preencha só quando modelo_correto = N, com o valor correto. Se a informação não existe no edital (o modelo inventou), escreva 'nenhum' - senão o erro conta como FP e FN. Nos campos sim/não, escreva 'sim' ou 'não'.",
         "5. Percentuais em decimal (20% -> 0.2). Valores em reais como número (1234567.89).",
         "6. Cota = reserva de vagas. Pontuação extra/bônus para um grupo NÃO é cota.",
-        "7. status_in5 é calculado pelo código a partir dos campos acima; marque N se a conclusão final estiver errada.",
+        "7. outras_cotas: se errado, liste em valor_real os grupos com cota e o percentual (ex.: PcD 0.05; quilombolas 0.05), ou 'nenhum'.",
         f"Amostra: {sel['id'].nunique()} editais sorteados (estratificados por ente), {len(df)} linhas.",
     ]})
 
@@ -104,12 +120,12 @@ def gera_planilha_revisao(sobrescrever: bool = False) -> Path:
     with pd.ExcelWriter(REVISAO, engine="openpyxl") as xw:
         instrucoes.to_excel(xw, sheet_name="instrucoes", index=False)
         df.to_excel(xw, sheet_name="revisao", index=False)
-    _formata(df, paths)
+    _formata(df, amostra.set_index("id").apply(link_pdf, axis=1))
     print(f"📝 {REVISAO} ({sel['id'].nunique()} editais, {len(df)} linhas)")
     return REVISAO
 
 
-def _formata(df: pd.DataFrame, paths: pd.Series) -> None:
+def _formata(df: pd.DataFrame, links: pd.Series) -> None:
     wb = load_workbook(REVISAO)
     ws = wb["revisao"]
     cols = {c: i + 1 for i, c in enumerate(df.columns)}
@@ -133,7 +149,7 @@ def _formata(df: pd.DataFrame, paths: pd.Series) -> None:
         for c in ("modelo_correto", "valor_real", "comentario"):
             ws.cell(r, cols[c]).fill = amarelo
         link = ws.cell(r, cols["arquivo_pdf"])
-        link.hyperlink = str(Path(paths[ws.cell(r, cols["id"]).value]).resolve())
+        link.hyperlink = links[ws.cell(r, cols["id"]).value]
         link.font = Font(color="0563C1", underline="single")
 
     dv = DataValidation(type="list", formula1='"S,N"', allow_blank=True)
@@ -146,8 +162,11 @@ def _formata(df: pd.DataFrame, paths: pd.Series) -> None:
 
 
 def calcula_f1() -> pd.DataFrame:
-    """TP: modelo trouxe valor e está certo | FP: trouxe valor errado |
-    FN: deixou de trazer (ou trouxe errado) um valor que existe | TN: vazio e de fato não existe."""
+    """Só entram as linhas com modelo_correto = S ou N (editais fora do escopo ficam em branco).
+    TP: modelo trouxe valor e está certo | TN: vazio e de fato não existe |
+    FN: deixou vazio um valor que existe |
+    FP + FN: trouxe valor errado (errou e perdeu o valor verdadeiro) |
+    só FP: trouxe valor, mas valor_real = 'nenhum' (a informação não existe no edital)."""
     df = pd.read_excel(REVISAO, sheet_name="revisao", dtype=str).fillna("")
     df["modelo_correto"] = df["modelo_correto"].str.strip().str.upper()
     revisado = df[df["modelo_correto"].isin(["S", "N"])]
@@ -157,9 +176,8 @@ def calcula_f1() -> pd.DataFrame:
         tem_modelo = not _vazio(r["valor_modelo"], r["campo"])
         if r["modelo_correto"] == "S":
             return ("TP",) if tem_modelo else ("TN",)
-        real_existe = not _vazio(r["valor_real"], r["campo"]) and r["valor_real"].strip().lower() != "nenhum"
         if tem_modelo:
-            return ("FP", "FN") if real_existe else ("FP",)
+            return ("FP",) if r["valor_real"].strip().lower() == "nenhum" else ("FP", "FN")
         return ("FN",)
 
     contagem = []
@@ -180,7 +198,14 @@ def calcula_f1() -> pd.DataFrame:
     c.loc["TOTAL", "acuracia"] = (revisado["modelo_correto"] == "S").mean()
     c = c[["TP", "FP", "FN", "TN", "precisao", "revocacao", "f1", "acuracia"]].round(3)
 
-    c.to_excel(F1_SAIDA)
+    fora = df.groupby("n")["modelo_correto"].apply(lambda m: (m == "").all())
+    editais_fora = df[df["n"].isin(fora[fora].index)].drop_duplicates("n")[["n", "ente", "arquivo_pdf", "comentario"]]
+    erros = revisado[revisado["modelo_correto"] == "N"][["n", "ente", "arquivo_pdf", "campo", "valor_modelo", "valor_real", "comentario"]]
+    with pd.ExcelWriter(F1_SAIDA, engine="openpyxl") as xw:
+        c.to_excel(xw, sheet_name="f1")
+        erros.to_excel(xw, sheet_name="erros", index=False)
+        editais_fora.to_excel(xw, sheet_name="editais_fora", index=False)
+    print(f"Editais avaliados: {revisado['n'].nunique()} | fora da avaliação: {len(editais_fora)} ({', '.join(editais_fora['ente'] + ' ' + editais_fora['arquivo_pdf'])})")
     print(f"Linhas revisadas: {len(revisado)} de {len(df)} ({pendentes} pendentes)")
     print(c.to_string())
     print(f"\n📊 {F1_SAIDA}")

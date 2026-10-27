@@ -7,6 +7,7 @@ serem enviados ao modelo como documento PDF.
 """
 from pathlib import Path
 import hashlib
+import re
 import unicodedata
 
 import pandas as pd
@@ -22,8 +23,43 @@ def _nfc(s: str) -> str:
     return unicodedata.normalize("NFC", s)
 
 
+def _id(rel: str) -> str:
+    return hashlib.sha1(rel.encode("utf-8")).hexdigest()[:16]
+
+
+def _slug(nome: str) -> str:
+    return re.sub(r"[^A-Z]", "", unicodedata.normalize("NFD", nome).encode("ascii", "ignore").decode().upper())
+
+
+def lista_novos(base: pd.DataFrame, novos_root: Path = settings.LPG_NOVOS_ROOT) -> pd.DataFrame:
+    """PDFs avulsos em data/NOVOS/<qualquer pasta>/*.pdf. O ente sai do nome do arquivo
+    (ex.: 2023-02_EST-BAHIA_LPG.pdf) e é casado com as pastas de entes da base."""
+    if not novos_root.exists():
+        return pd.DataFrame()
+    entes = {(t, _slug(e)): e for t, e in base[["tipo_ente", "ente"]].drop_duplicates().itertuples(index=False)}
+    for tipo_dir in settings.LPG_PDF_ROOT.iterdir():  # inclui entes com pasta vazia (ex.: Roraima)
+        if tipo_dir.is_dir():
+            t = "CAPITAL" if tipo_dir.name.lower().startswith("capita") else "ESTADO"
+            entes |= {(t, _slug(d.name)): _nfc(d.name) for d in tipo_dir.iterdir() if d.is_dir()}
+    linhas = []
+    for pdf in sorted(novos_root.rglob("*")):
+        if not (pdf.is_file() and pdf.suffix.lower() == ".pdf"):
+            continue
+        m = re.search(r"_(EST|CAP)-([A-Za-z]+)_", pdf.name)
+        if not m:
+            raise ValueError(f"Não consegui identificar o ente pelo nome do arquivo: {pdf}")
+        tipo = "ESTADO" if m.group(1) == "EST" else "CAPITAL"
+        ente = entes.get((tipo, _slug(m.group(2))))
+        if ente is None:
+            raise ValueError(f"Ente '{m.group(2)}' ({tipo}) não encontrado nas pastas da base: {pdf}")
+        rel = "NOVOS/" + _nfc(pdf.relative_to(novos_root).as_posix())
+        linhas.append({"id": _id(rel), "tipo_ente": tipo, "ente": ente, "arquivo": _nfc(pdf.name),
+                       "pdf_path": str(pdf), "origem": "novos"})
+    return pd.DataFrame(linhas)
+
+
 def lista_editais(pdf_root: Path = settings.LPG_PDF_ROOT) -> pd.DataFrame:
-    """Lista os PDFs da raiz de cada ente: <pdf_root>/<Capitais|Estados>/<ente>/*.pdf"""
+    """PDFs da raiz de cada ente (<pdf_root>/<Capitais|Estados>/<ente>/*.pdf) + os de data/NOVOS."""
     linhas = []
     for tipo_dir in sorted(pdf_root.iterdir()):
         if not tipo_dir.is_dir():
@@ -36,13 +72,15 @@ def lista_editais(pdf_root: Path = settings.LPG_PDF_ROOT) -> pd.DataFrame:
                 if pdf.is_file() and pdf.suffix.lower() == ".pdf":
                     rel = _nfc(pdf.relative_to(pdf_root).as_posix())
                     linhas.append({
-                        "id": hashlib.sha1(rel.encode("utf-8")).hexdigest()[:16],
+                        "id": _id(rel),
                         "tipo_ente": tipo_ente,
                         "ente": _nfc(ente_dir.name),
                         "arquivo": _nfc(pdf.name),
                         "pdf_path": str(pdf),
+                        "origem": "base",
                     })
-    return pd.DataFrame(linhas)
+    base = pd.DataFrame(linhas)
+    return pd.concat([base, lista_novos(base)], ignore_index=True)
 
 
 def eh_escaneado(doc: pymupdf.Document) -> bool:
@@ -82,7 +120,8 @@ def converter_editais(refazer: bool = False) -> pd.DataFrame:
     linhas = []
     for _, row in df.iterrows():
         if row["id"] in anterior.index and anterior.loc[row["id"], "status"] == "ok":
-            linhas.append(anterior.loc[row["id"]].to_dict() | {"id": row["id"]})
+            ja = anterior.loc[row["id"]].to_dict()
+            linhas.append(row.to_dict() | {k: v for k, v in ja.items() if k not in row.index})
             continue
 
         reg = row.to_dict()
