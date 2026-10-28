@@ -358,7 +358,7 @@ def monta_escopo(esc: str, A: dict) -> str:
     <div class="faixa-seg" role="img" aria-label="{A['agr_cumpre']} entes atingem e {A['agr_n'] - A['agr_cumpre']} não atingem o agregado">
       <span class="seg seg-ok" style="flex:{A['agr_cumpre']}">{A['agr_cumpre']}</span><span class="seg seg-nc" style="flex:{A['agr_n'] - A['agr_cumpre']}">{A['agr_n'] - A['agr_cumpre']}</span></div>
     <div class="legenda"><span class="leg leg-ok">Atinge 20% e 10%</span><span class="leg leg-nc">Não atinge</span></div>
-    <p class="nota">Soma das vagas reservadas do ente ÷ soma das vagas. {A['agr_so']['negras']} entes atingem 20% para pessoas negras, e {A['agr_so']['indigenas']} atingem 10% para pessoas indígenas. {A['ambos']} entes cumprem pelos dois critérios.</p></div>
+    <p class="nota">Soma das vagas reservadas do ente ÷ soma das vagas. {A['agr_so']['negras']} entes atingem 20% para pessoas negras e {A['agr_so']['indigenas']} atingem 10% para pessoas indígenas; {A['agr_cumpre']} atingem os dois mínimos ao mesmo tempo. Só {A['ambos']} entes cumprem tanto por edital quanto pelo agregado.</p></div>
 </div>
 <details class="lista"><summary>Entes com ao menos um edital não conforme ({nc})</summary><p>{lista_nc or "Nenhum."}</p></details>""",
         f"O critério por edital é rigoroso: um único edital não conforme tira o ente. O agregado pode ficar abaixo do "
