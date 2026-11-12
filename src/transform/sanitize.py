@@ -1,7 +1,10 @@
 import pandas as pd
 import numpy as np
+import math
 import re
 import unicodedata
+
+from config import settings
 
 def padronizar_percentual(serie: pd.Series) -> pd.Series:
     def converter(valor):
@@ -100,3 +103,21 @@ def normalizar_texto(txt: str) -> str:
     return txt
 
 
+
+
+# ---------------------------------------------------------------------------
+# Números da IN MinC nº 5/2023
+# ---------------------------------------------------------------------------
+
+def arredonda_in5(x: float) -> int:
+    """Arredondamento do §2º do art. 5º da IN 5: fração >= 0,5 arredonda para cima; < 0,5 para baixo.
+
+    Não usar round()/np.round(), que arredondam 2,5 para 2 (arredondamento bancário).
+    """
+    return math.floor(x + 0.5 + settings.COTA_TOL)
+
+
+def num(valor) -> float | None:
+    """Converte um valor isolado para float; texto não numérico, vazio ou NaN vira None."""
+    v = pd.to_numeric(valor, errors="coerce")
+    return None if pd.isna(v) else float(v)

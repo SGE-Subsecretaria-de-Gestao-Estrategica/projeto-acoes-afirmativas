@@ -5,20 +5,14 @@
 - §3º: editais com categorias devem ter cotas em todas elas;
 - §4º: categoria com 1 vaga pode ir à ampla concorrência, se o edital somar 20% / 10%.
 """
-import math
-
 from config import settings
+from transform.sanitize import arredonda_in5  # noqa: F401  (reexportado: features.py e testes importam daqui)
 
 GRUPOS = {
     "negras": ("percentual_negras", "vagas_negras", "vagas_negras_total", ("negr", "pret", "pard", "afro")),
     "indigenas": ("percentual_indigenas", "vagas_indigenas", "vagas_indigenas_total", ("indígen", "indigen")),
 }
-TOL = 1e-9
-
-
-def arredonda_in5(x: float) -> int:
-    """Arredondamento do §2º (meio para cima). np.round arredondaria 2,5 para 2."""
-    return math.floor(x + 0.5 + TOL)
+TOL = settings.COTA_TOL
 
 
 def _fracao(p):

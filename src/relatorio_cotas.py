@@ -14,10 +14,10 @@ from pathlib import Path
 import pandas as pd
 
 from relatorio_exploratorio import GRUPOS_OUTRAS, ROT, STATUS, barras, brl, n, p, tipo_motivo
-from transform.conformidade import _especifico_do_grupo
+from transform.conformidade import _especifico_do_grupo, avalia_edital
 
 ROOT = Path(__file__).resolve().parents[1]
-PLANILHA = ROOT / "data" / "final" / "lpg_editais.xlsx"
+PLANILHA = ROOT / "data" / "final" / "lpg_editais__2026-11-05_12-00.xlsx"
 F1 = ROOT / "data" / "final" / "f1_lpg.xlsx"
 EDITAIS_DIR = ROOT / "data" / "EDITAIS"
 SAIDA = ROOT / "relatorios" / "relatorio_cotas_lpg.html"
@@ -48,7 +48,28 @@ def carrega() -> dict:
     d = abas["editais"]
     d = d[~d["arquivo_pdf"].isin(FORA_DO_ESCOPO)].copy()
     d["ente"] = d["ente"].replace(GRAFIA)
-    d["st"] = d["status_in5"].where(d["status_extracao"] == "ok").fillna("sem_leitura")
+    # células editadas à mão podem vir como texto no formato brasileiro ("361.839,19")
+    for c in d.filter(regex=r"^(valor|vagas|perc)_").columns:
+        if d[c].dtype == object:
+            d[c] = pd.to_numeric(d[c].map(lambda v: v.strip().replace(".", "").replace(",", ".") if isinstance(v, str) else v))
+    # linhas inseridas à mão na revisão (sem id nem extração): status pelas regras da IN 5, a partir das vagas
+    # reservadas contadas pelo revisor; edital_especifico_grupo ignorado (ali descreve o público, e há cotas)
+    manual = d["id"].isna()
+    for i, r in d[manual].iterrows():
+        inteiro = lambda v: None if pd.isna(v) else int(v)
+        res = avalia_edital({"tipo_documento": "edital", "vagas_totais": inteiro(r["vagas_totais"]), "categorias": [],
+                             "vagas_negras_total": inteiro(r["vagas_cotas_negras"]),
+                             "vagas_indigenas_total": inteiro(r["vagas_cotas_indigenas"])})
+        for k, v in res.items():
+            if not k.startswith("perc_"):
+                d.at[i, k] = v
+    d.loc[manual, "id"] = "manual-" + d.index[manual].astype(str)
+    d.loc[manual, "status_extracao"] = "manual"
+    d.loc[manual, "arquivo_pdf"] = d.loc[manual, "arquivo_pdf"].fillna("sem arquivo (" + d.loc[manual, "ente"] + ")")
+    d.loc[manual, "valor_por_vaga"] = d.loc[manual, "valor_total"] / d.loc[manual, "vagas_totais"]
+    for g in GRUPOS:
+        d.loc[manual, f"valor_cotas_{g}"] = d.loc[manual, f"vagas_cotas_{g}"] * d.loc[manual, "valor_por_vaga"]
+    d["st"] = d["status_in5"].where(d["status_extracao"].isin(["ok", "manual"])).fillna("sem_leitura")
     d["vagas_base"] = d["vagas_totais"].fillna(d["numero_vagas_categoria_total"])
 
     # valor reservado por grupo: vagas de cota x valor médio da vaga; se faltar vaga, percentual x valor total;
@@ -500,7 +521,7 @@ def monta(B: dict) -> str:
     return PAGINA.format(
         fontes=fontes_embutidas(), hoje=date.today().strftime("%d/%m/%Y"), n=len(d), blocos=blocos,
         limites="".join(f"<li>{x}</li>" for x in limites if x),
-        metodo=(f"Base: <code>data/final/lpg_editais.xlsx</code>. Extração com LLM e regras do art. 5º da IN MinC nº 5/2023 "
+        metodo=(f"Base: <code>data/final/{PLANILHA.name}</code>. Extração com LLM e regras do art. 5º da IN MinC nº 5/2023 "
                 f"aplicadas em código. Gerado em {date.today().strftime('%d/%m/%Y')} por <code>src/relatorio_cotas.py</code>; "
                 f"todos os números são recalculados a cada execução."))
 
